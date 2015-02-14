@@ -24,7 +24,7 @@ public class guildmembres {
 	        Statement smt = con.createStatement() ;
 	        ResultSet rs = smt.executeQuery(sql) ;
 	          while (rs.next()) {
-	              System.out.println(rs.getString("mess")) ;
+	              System.out.println(rs.getString("mess") ) ;
 	           }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

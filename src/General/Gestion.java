@@ -6,34 +6,38 @@ import java.util.LinkedList;
 
 import javax.swing.*;
 
+@SuppressWarnings("serial")
 public class Gestion extends JFrame implements ActionListener{
-    private JTextField zoneCode = new JTextField();
-    private JTextArea vueXML = new JTextArea();
-    private JButton valider = new JButton("Valider");
-    private JButton insert = new JButton("insert");
+
+    private JButton btnProfile = new JButton("Profile");
+    private JButton btnMessagerie = new JButton("Messagerie");
+    private JButton btnGuild = new JButton("Guild");
 //    private static Annonceur unAnnonceur;
     
     public Gestion(){
         super();
+        
         this.setBounds(100, 100, 500, 500);
         this.setLayout(null);
         this.setTitle("Etude de cas Trelis");
         this.setResizable(false);
         
         
-        this.zoneCode.setBounds(40, 40, 100, 20);
-        this.vueXML.setBounds(160, 40, 250, 200);
-        this.valider.setBounds(50, 200, 90, 20);
-        this.insert.setBounds(50, 250, 90, 20);
+        this.btnProfile.setBounds(0, 0, 100, 40);
+        this.btnMessagerie.setBounds(0, 40, 100, 40);
+        this.btnGuild.setBounds(0, 80, 100, 40);
+
+        
+        this.add( this.btnProfile );
+        this.add( this.btnMessagerie );
+        this.add( this.btnGuild );
         
         
-        this.add(this.zoneCode);
-        this.add(this.valider);
-        this.add(this.vueXML);
-        this.add(this.insert);
+//        this.add(this.valider);
+//        this.add(this.insert);
         
-        valider.addActionListener(this);
-        insert.addActionListener(this);
+//        valider.addActionListener(this);
+//        insert.addActionListener(this);
 
         
         this.setVisible(true);
@@ -41,7 +45,7 @@ public class Gestion extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args) {
-//        Gestion Gestion = new Gestion();
+        Gestion Gestion = new Gestion();
 
     }
     
@@ -51,12 +55,12 @@ public class Gestion extends JFrame implements ActionListener{
         Object  source=e.getSource();
      
         
-        if  (source==valider){
+        if  (source==source){
             System.out.println("source clicked");
             
             Message mess= new Message(12, "lol");
             
-            mess.test();
+//            mess.test();
             
             Utilisateur ut = new Utilisateur();
             ut.getallusers();
@@ -85,12 +89,12 @@ public class Gestion extends JFrame implements ActionListener{
             
             }
         
-        if  (source==insert){
+//        if  (source==insert){
 //            Model testance = new Model();
 //            testance.insertsms(this.zoneCode.getText());
 //            
 //            this.zoneCode.getText();
-            }
+            
     }
     
     
