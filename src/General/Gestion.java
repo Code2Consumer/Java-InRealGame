@@ -54,7 +54,7 @@ public class Gestion extends JFrame implements ActionListener{
 
     public static void main(String[] args) {
     	
-        Gestion Gestion = new Gestion();
+        Gestion gest = new Gestion();
 
     }
     
@@ -66,9 +66,7 @@ public class Gestion extends JFrame implements ActionListener{
         
         if  (source==source){
             System.out.println("source clicked");
-            
-            Message mess= new Message(12, "lol");
-            
+
 //            mess.test();
             
             Utilisateur ut = new Utilisateur();

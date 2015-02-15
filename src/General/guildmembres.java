@@ -10,7 +10,6 @@ public class guildmembres {
 	private String username;
 	
 	
-
 	public int getId() {
 		return id;
 	}

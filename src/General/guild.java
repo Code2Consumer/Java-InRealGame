@@ -69,14 +69,14 @@ public class guild {
 		super();
 	}
 	
-	public void getguild(){
+	public void getguildbyguildid(int id){
 		
 		BDD unebdd = new BDD();
 		unebdd.chargerPilote();
 		unebdd.seConnecter();
 		Connection con = unebdd.getMaConnection();
 		
-        String sql =  "select * from guild where id = '"+ this.getId()+ "' " ;
+        String sql =  "select * from guild where id = '"+ id + "' " ;
         
         try {
         	
