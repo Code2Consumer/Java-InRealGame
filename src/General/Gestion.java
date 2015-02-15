@@ -1,5 +1,6 @@
 package General;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -12,6 +13,7 @@ public class Gestion extends JFrame implements ActionListener{
     private JButton btnProfile = new JButton("Profile");
     private JButton btnMessagerie = new JButton("Messagerie");
     private JButton btnGuild = new JButton("Guild");
+    private JPanel panel = new JPanel();
 //    private static Annonceur unAnnonceur;
     
     public Gestion(){
@@ -26,12 +28,16 @@ public class Gestion extends JFrame implements ActionListener{
         this.btnProfile.setBounds(0, 0, 100, 40);
         this.btnMessagerie.setBounds(0, 40, 100, 40);
         this.btnGuild.setBounds(0, 80, 100, 40);
-
+        
+        this.panel.setBounds(100, 0, 400, 500);
         
         this.add( this.btnProfile );
         this.add( this.btnMessagerie );
         this.add( this.btnGuild );
         
+        this.panel.setBackground(Color.BLACK);
+        
+        this.add( this.panel );
         
 //        this.add(this.valider);
 //        this.add(this.insert);
@@ -45,6 +51,7 @@ public class Gestion extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args) {
+    	
         Gestion Gestion = new Gestion();
 
     }
