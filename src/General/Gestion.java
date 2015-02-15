@@ -31,6 +31,8 @@ public class Gestion extends JFrame implements ActionListener{
         this.btnMessagerie.setBounds(0, 40, 100, 40);
         this.btnGuild.setBounds(0, 80, 100, 40);
         
+//        this.btnGuild.
+        
         this.panel.setBounds(100, 0, 400, 500);
         
         this.add( this.btnProfile );
