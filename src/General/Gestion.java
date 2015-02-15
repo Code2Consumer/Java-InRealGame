@@ -14,6 +14,8 @@ public class Gestion extends JFrame implements ActionListener{
     private JButton btnMessagerie = new JButton("Messagerie");
     private JButton btnGuild = new JButton("Guild");
     private JPanel panel = new JPanel();
+    
+    
 //    private static Annonceur unAnnonceur;
     
     public Gestion(){
@@ -21,7 +23,7 @@ public class Gestion extends JFrame implements ActionListener{
         
         this.setBounds(100, 100, 500, 500);
         this.setLayout(null);
-        this.setTitle("Etude de cas Trelis");
+        this.setTitle("In Real Game");
         this.setResizable(false);
         
         
