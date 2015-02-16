@@ -41,7 +41,7 @@ public class Gestion extends JFrame implements ActionListener{
         
         this.panel.setBackground(Color.BLACK);
         
-        this.add( this.panel );
+       
         
 //        this.add(this.valider);
 //        this.add(this.insert);
@@ -70,8 +70,15 @@ public class Gestion extends JFrame implements ActionListener{
         	
             System.out.println("source clicked");
             
-            affichertoutelesguilds();
-
+            // affichertoutelesguilds();
+            
+            guild guild = new guild(12, 2, "nom de la guild", "nomgm", "nom co gm", "nom mmo proincipale", "nom serveur");
+            
+            JPanel pan = createguildJpanel(guild);
+            pan.setBackground(Color.BLACK);
+            pan.setVisible(true);
+            this.add(pan);
+            
             }
         
 //        if  (source==insert){
@@ -91,11 +98,13 @@ public class Gestion extends JFrame implements ActionListener{
     	
     }
     
-    public void createguildJpanel(guild guild){
+    public JPanel createguildJpanel(guild guild){
     	
     	JPanel Gpanel = new JPanel();
+    	Gpanel.setBounds(100, 0, 400, 500);
     	
         JButton VoirGuild = new JButton("Voir La Guild ");
+        // <html> <body> <span style='color=red;'> </body> </span> </html>
         JButton Postuler = new JButton(" Postuler ");
         
         JLabel GuildName = new JLabel( guild.getGuild_name() );
@@ -103,10 +112,21 @@ public class Gestion extends JFrame implements ActionListener{
         JLabel GuildMmoPrincipale = new JLabel( guild.getMMO_Principale() );
         JLabel GuildServeur= new JLabel( guild.getServeur() );
         
-//        GuildName.setBounds(100, 0, 400, 500);
-//        GuildgM.setBounds(100, 0, 400, 500);
-//        GuildMmoPrincipale.setBounds(100, 0, 400, 500);
-//        GuildServeur.setBounds(100, 0, 400, 500);
+      Gpanel.add( GuildName );
+      Gpanel.add(GuildgM);
+      Gpanel.add(GuildMmoPrincipale);
+      Gpanel.add(GuildServeur);
+      Gpanel.add(VoirGuild);
+      Gpanel.add(Postuler);
+      
+      return Gpanel;
+
+
+        
+//        GuildName.setBounds(0, 10, 40, 50);
+//        GuildgM.setBounds(0, 10, 40, 500);
+//        GuildMmoPrincipale.setBounds(0, 10, 40, 50);
+//        GuildServeur.setBounds(0, 10, 40, 50);
         
 //        GuildName;
 //        GuildgM;
