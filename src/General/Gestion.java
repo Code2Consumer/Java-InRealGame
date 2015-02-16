@@ -46,7 +46,7 @@ public class Gestion extends JFrame implements ActionListener{
 //        this.add(this.valider);
 //        this.add(this.insert);
         
-//        valider.addActionListener(this);
+        	btnGuild.addActionListener(this);
 //        insert.addActionListener(this);
 
         
@@ -66,36 +66,12 @@ public class Gestion extends JFrame implements ActionListener{
         Object  source=e.getSource();
      
         
-        if  (source==source){
+        if  (source==btnGuild){
+        	
             System.out.println("source clicked");
+            
+            affichertoutelesguilds();
 
-//            mess.test();
-            
-            Utilisateur ut = new Utilisateur();
-            ut.getallusers();
-//            System.out.println(this.zoneCode.getText());
-//            this.vueXML.setText(this.zoneCode.getText());
-            
-//            Diffusion diff=new Diffusion();
-//            String test= diff.toXML();
-//            
-//            this.vueXML.setText(test);
-//            
-//            this.zoneCode.setText("its done");
-            
-//            Model testance = new Model();
-//            LinkedList<Message> messms=testance.selectAll();
-//            String afficher="";
-//            
-//            for (Message message : messms) {
-//                afficher+=message.getSms();
-//            }
-//            
-            
-//            Message Message = messms.get(0);
-//            Message.getSms();
-//            this.vueXML.setText(afficher);
-            
             }
         
 //        if  (source==insert){
@@ -106,6 +82,41 @@ public class Gestion extends JFrame implements ActionListener{
             
     }
     
+    public void affichertoutelesguilds(){
+
+    	LinkedList<guild> allguilds = guild.getallguilds();
+        for (int i = 0; i < allguilds.size(); i++) {
+            System.out.println(allguilds.get(i).getId());
+        }
+    	
+    }
+    
+    public void createguildJpanel(guild guild){
+    	
+    	JPanel Gpanel = new JPanel();
+    	
+        JButton VoirGuild = new JButton("Voir La Guild ");
+        JButton Postuler = new JButton(" Postuler ");
+        
+        JLabel GuildName = new JLabel( guild.getGuild_name() );
+        JLabel GuildgM = new JLabel( guild.getGM() );
+        JLabel GuildMmoPrincipale = new JLabel( guild.getMMO_Principale() );
+        JLabel GuildServeur= new JLabel( guild.getServeur() );
+        
+//        GuildName.setBounds(100, 0, 400, 500);
+//        GuildgM.setBounds(100, 0, 400, 500);
+//        GuildMmoPrincipale.setBounds(100, 0, 400, 500);
+//        GuildServeur.setBounds(100, 0, 400, 500);
+        
+//        GuildName;
+//        GuildgM;
+//        GuildMmoPrincipale;
+//        GuildServeur;
+        
+
+//        this.panel.setBounds(100, 0, 400, 500);
+//        this.add( this.btnProfile );
+    }
     
     
     
