@@ -1,8 +1,6 @@
 package General;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -40,7 +38,6 @@ public class Gestion extends JFrame implements ActionListener{
         this.add( this.btnProfile );
         this.add( this.btnMessagerie );
         this.add( this.btnGuild );
-        this.add( this.panel );
         
         this.panel.setBackground(Color.BLACK);
         
@@ -77,21 +74,11 @@ public class Gestion extends JFrame implements ActionListener{
             
             guild guild = new guild(12, 2, "nom de la guild", "nomgm", "nom co gm", "nom mmo proincipale", "nom serveur");
             
-            JPanel pan = this.getallguildspanelsinapanel();
-            
-            pan.setBackground(Color.BLUE);
+            JPanel pan = createguildJpanel(guild);
+            pan.setBackground(Color.BLACK);
             pan.setVisible(true);
-
-            JScrollBar scroller = new JScrollBar();
-        	scroller.setBounds(100, 0, 400, 500);
-        	scroller.setVisible(true);
-        	pan.add(scroller);
+            this.add(pan);
             
-            
-            this.remove( this.panel );
-            this.add( pan );
-            this.revalidate();
-            this.repaint();
             }
         
 //        if  (source==insert){
@@ -102,49 +89,19 @@ public class Gestion extends JFrame implements ActionListener{
             
     }
     
-    public JPanel getallguildspanelsinapanel(){
-     	int hauteur = 0;
-    	LinkedList<guild> allguilds = guild.getallguilds();
-    	JPanel panguild = new JPanel();
-    	JPanel pan = new JPanel();
-    	pan.setBounds(100, 0, 400, 500);
-    	pan.setVisible(true);
-    	
-    	for (int i = 0; i < allguilds.size(); i++) {
-            System.out.println(allguilds.get(i).getId());
-            panguild = afficheruneguild(allguilds.get(i), hauteur);
-            hauteur+=100;
-            pan.add(panguild);
-        }
-    	
-    	return pan;
-    }
-    
-    public JPanel affichertoutelesguilds(){
+    public void affichertoutelesguilds(){
 
     	LinkedList<guild> allguilds = guild.getallguilds();
-    	int hauteur = 0;
-    	JPanel pan = new JPanel();
-    	
         for (int i = 0; i < allguilds.size(); i++) {
             System.out.println(allguilds.get(i).getId());
-            pan = afficheruneguild(allguilds.get(i), hauteur);
-            hauteur+=100;
         }
-        return pan;
     	
     }
     
-    public JPanel afficheruneguild(guild guild, int hauteur){
-    	JPanel pan = this.createguildJpanel(guild, hauteur);
-    	return pan;
-    }
-    
-    
-    public JPanel createguildJpanel(guild guild, int hauteur){
+    public JPanel createguildJpanel(guild guild){
     	
     	JPanel Gpanel = new JPanel();
-    	Gpanel.setBounds(100, hauteur, 400, 500);
+    	Gpanel.setBounds(100, 0, 400, 500);
     	
         JButton VoirGuild = new JButton("Voir La Guild ");
         // <html> <body> <span style='color=red;'> </body> </span> </html>
@@ -161,9 +118,6 @@ public class Gestion extends JFrame implements ActionListener{
       Gpanel.add(GuildServeur);
       Gpanel.add(VoirGuild);
       Gpanel.add(Postuler);
-      
-      Gpanel.setBackground(Color.BLUE);
-      Gpanel.setVisible(true);
       
       return Gpanel;
 
