@@ -82,14 +82,22 @@ public class Gestion extends JFrame implements ActionListener{
             pan.setBackground(Color.BLUE);
             pan.setVisible(true);
 
-            JScrollBar scroller = new JScrollBar();
-        	scroller.setBounds(100, 0, 400, 500);
+        	//pan.setBounds(100, 0, 300, 400);
+        	JScrollPane scroller = new JScrollPane(pan,
+                    JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        	scroller.setBounds(100, 0, 300, 400);
         	scroller.setVisible(true);
-        	pan.add(scroller);
+
+        	//pan.add(scroller);
+        	this.remove( this.panel );
+        	this.panel = pan;
+        	this.add( scroller );
+            
+        	
+
             
             
-            this.remove( this.panel );
-            this.add( pan );
             this.revalidate();
             this.repaint();
             }
