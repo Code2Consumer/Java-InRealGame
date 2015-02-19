@@ -1,6 +1,10 @@
 package General;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class candidature {
 	private int id, Guild_Id, user_id;
@@ -61,5 +65,32 @@ public class candidature {
 		this.date = date;
 	}
 	
+	
+	public void createCandidature(){
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+		
+        String sql =  "" ;
+        
+        try {
+	        Statement smt = con.createStatement() ;
+	        ResultSet rs = smt.executeQuery(sql) ;
+
+	        
+	          while (rs.next()) {
+	        	  if ( rs.getString("id") != null ) {
+//	        		  this.id = Integer.parseInt(rs.getString("id") );
+//	        		  this.username = rs.getString("username");
+//	        		  this.email = rs.getString("email"); 
+//	        		  this.password = rs.getString("password");
+	              }
+	          }    
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("un truk a pas marcher ");
+		}
+	}
 	
 }

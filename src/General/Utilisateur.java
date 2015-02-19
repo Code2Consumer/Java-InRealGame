@@ -55,17 +55,16 @@ public class Utilisateur {
 
 
 
-	public void inscription(){
+	public void inscription(String username, String email, String password){
 		
 		BDD unebdd = new BDD();
 		unebdd.chargerPilote();
 		unebdd.seConnecter();
 		Connection con = unebdd.getMaConnection();
 		
-        String sql =  " INSERT INTO `utilisateur`(`id`, `username`, `username_canonical`, `email`, `email_canonical`, `password`) VALUES (NULL, 'usernamedoulebrazil','usernamedelebrazil', 'emaildoulebrazil', 'emailededoulebrazil', 'passworddoulebrazil')  " ;
+        String sql =  " INSERT INTO `utilisateur`(`id`, `username`, `username_canonical`, `email`, `email_canonical`, `password`) VALUES (NULL, '"+username+"','"+username+"', '"+email+"', '"+email+"', '"+password+"')  " ;
         
         try {
-        	
 	        Statement smt = con.createStatement() ;
 	        ResultSet rs = smt.executeQuery(sql) ;
 	        
