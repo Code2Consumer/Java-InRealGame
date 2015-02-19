@@ -89,23 +89,23 @@ public class Gestion extends JFrame implements ActionListener{
 //        	scroller.setVisible(true);
 //
             
-        	Object[] columnNames = { "Guild", "lol" };
-            
-
-            JTable table = new JTable(getallguildinaJTable(), columnNames);
-            
+        	Object[] columnNames = {"Guild", "GuildMaster", "MMO Principale", "Server", "id"};
+        	Object[][] data =getallguildinaJTable();
+            JTable table = new JTable(data, columnNames);
         	JScrollPane scroller = new JScrollPane( table );
+
+     
+          	// pan.setBounds(100, 0, 300, 400);
+      		scroller.setBounds(100, 0, 400, 500);
+      		scroller.setVisible(true);
         	
         	this.remove( this.panel );
         	
-        	
-        	getContentPane().add( scroller, BorderLayout.CENTER );
+        	this.getContentPane().add( scroller);
             
             this.validate();
             this.repaint();
-            
-            
-            
+
             }
         
 //        if  (source==insert){
@@ -119,23 +119,18 @@ public class Gestion extends JFrame implements ActionListener{
     public Object[][] getallguildinaJTable(){
     	
     	LinkedList<guild> allguilds = guild.getallguilds();
-    	Object[][] data = null;
-    	Object[] dataa = null;
     	
+    	Object[][] data = new Object[allguilds.size()][5];
+
     	for (int i = 0; i < allguilds.size(); i++) {
-    		
-    		dataa[0] = allguilds.get(i).getId();
-    		dataa[1] = allguilds.get(i).getGuild_name();
-    		dataa[2] = allguilds.get(i).getGM();
-    		dataa[3] = allguilds.get(i).getMMO_Principale();
-    		dataa[4] = allguilds.get(i).getServeur();
-    		data[i] = dataa;
-    		
-    		// allguilds.get(i).getId();
-    		
+    		data[i][0] = allguilds.get(i).getGuild_name();
+    		data[i][1] = allguilds.get(i).getGM();
+    		data[i][2] = allguilds.get(i).getMMO_Principale();
+    		data[i][3] = allguilds.get(i).getServeur();
+    	//	data[i][4] = allguilds.get(i).getId()+"";
+    		data[i][4] = new JButton("Voir la guild");
         }    	
     	return data;
-    	
     }
     
     public JPanel getallguildspanelsinapanel(){
