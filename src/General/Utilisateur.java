@@ -56,7 +56,6 @@ public class Utilisateur {
 
 
 	public void inscription(String username, String email, String password){
-		
 		BDD unebdd = new BDD();
 		unebdd.chargerPilote();
 		unebdd.seConnecter();
@@ -92,7 +91,6 @@ public class Utilisateur {
 		Connection con = unebdd.getMaConnection();
 		
         String sql =  "select * from utilisateur" ;
-        
         try {
 	        Statement smt = con.createStatement() ;
 	        ResultSet rs = smt.executeQuery(sql) ;

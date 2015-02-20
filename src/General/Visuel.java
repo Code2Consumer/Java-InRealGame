@@ -1,5 +1,7 @@
 package General;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,15 +10,19 @@ import java.util.LinkedList;
 import javax.swing.*;
 
 public class Visuel extends JFrame implements ActionListener{
+	
+	public JPanel PanelContent = new JPanel(new BorderLayout());
     private JTextField connectionlogin = new JTextField();
+    private JTextField connectionemail = new JTextField();
     private JPasswordField connectionmdp = new JPasswordField();
     private JButton connection = new JButton("Connection");
     private JButton inscription = new JButton("Inscription");
+    private JButton inscriptionValider = new JButton("Valider");
     private JLabel LabelLogin = new JLabel(" Login : ");
     private JLabel LabelMDP = new JLabel(" Password :  ");
+    private JLabel LabelEmail = new JLabel(" Email : ");
     private JLabel LabelTitre = new JLabel(" In Real Game ");
     private JLabel LabelMessage = new JLabel(" Connection ");
-//    private static Annonceur unAnnonceur;
 
     public Visuel(){
         super();
@@ -25,33 +31,14 @@ public class Visuel extends JFrame implements ActionListener{
         this.setTitle("In Real Game");
         this.setResizable(false);
         
-        this.connection.setBounds(40, 170, 200, 40);
-        this.inscription.setBounds(40, 220, 200, 40);
-        this.connectionlogin.setBounds(120, 100, 120, 20);
-        this.connectionmdp.setBounds(120, 130, 120, 20);
-        this.LabelLogin.setBounds(40, 100, 100, 20);
-        this.LabelMDP.setBounds(40, 130, 100, 20);
-        this.LabelTitre.setBounds(40, 20, 200, 50);
-        this.LabelMessage.setBounds(110, 60, 200, 40);
-        
-        this.add(this.connection);
-        this.add(this.inscription);
-        this.add(this.connectionlogin);
-        this.add(this.connectionmdp);
-        this.add(this.connection);
-        this.add(this.LabelLogin);
-        this.add(this.LabelMDP);
-        this.add(this.LabelTitre);
-        this.add(this.LabelMessage);
-        
-        this.LabelTitre.setFont( new Font("Serif", Font.PLAIN, 30));
-        
-        
-        connection.addActionListener(this);
-        inscription.addActionListener(this);
+        setpanelconnection();
 
-        
+        this.add(this.PanelContent);
         this.setVisible(true);
+        
+        this.inscription.addActionListener(this);          
+        this.inscriptionValider.addActionListener(this);        
+        this.connection.addActionListener(this);
         
     }
 
@@ -63,10 +50,8 @@ public class Visuel extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         
         Object  source=e.getSource();
-     
-        
+
         if  (source==connection){
-        	
         	String login = this.connectionlogin.getText();
         	String mdp = this.connectionmdp.getText();
             
@@ -74,56 +59,94 @@ public class Visuel extends JFrame implements ActionListener{
             ut.connection(login, mdp);
             
             if( ut.getId() != 0 ){
-            	
-            	Gestion gest = new Gestion();
-            	
-            	this.setVisible(false); //you can't see me!
-            	this.dispose(); //Destroy the JFrame object
-            	
+            		Gestion gest = new Gestion();
+            		this.setVisible(false); //you can't see me!
+            		this.dispose(); //Destroy the JFrame object
             }else{
-            	
-            	this.LabelMessage.setText(" Indentiffiants incorecte ");
-            	
+            		this.LabelMessage.setText(" Indentiffiants incorecte ");
             }
-
-            
-//            Message mess= new Message(12, "lol");
-//            
-//            mess.test();
-//            
-//            Utilisateur ut = new Utilisateur();
-//            ut.getallusers();
-//            System.out.println(this.zoneCode.getText());
-//            this.vueXML.setText(this.zoneCode.getText());
-            
-//            Diffusion diff=new Diffusion();
-//            String test= diff.toXML();
-//            
-//            this.vueXML.setText(test);
-//            
-//            this.zoneCode.setText("its done");
-            
-//            Model testance = new Model();
-//            LinkedList<Message> messms=testance.selectAll();
-//            String afficher="";
-//            
-//            for (Message message : messms) {
-//                afficher+=message.getSms();
-//            }
-//            
-            
-//            Message Message = messms.get(0);
-//            Message.getSms();
-//            this.vueXML.setText(afficher);
-            
-            }
+        }
         
         if  (source==inscription){
-//            Model testance = new Model();
-//            testance.insertsms(this.zoneCode.getText());
-//            
-//            this.zoneCode.getText();
+        	
+
+            System.out.println("inscription pressed");
+            setpanelinscription();
+
             }
+    }
+    
+    public void setpanelinscription() {
+    	
+    	JPanel PanelContentt = new JPanel(new BorderLayout());
+    	
+    	this.remove(PanelContent);
+    	PanelContent.remove(connection);
+    	
+    	this.LabelEmail.setVisible(true);
+
+    	this.connectionlogin.setBounds(120, 100, 120, 20);
+        this.connectionmdp.setBounds(120, 130, 120, 20);
+        this.connectionemail.setBounds(120, 160, 120, 20);
+        this.LabelLogin.setBounds(40, 100, 100, 20);
+        this.LabelMDP.setBounds(40, 130, 100, 20);
+        this.LabelEmail.setBounds(0, 0, 100, 20);
+        this.LabelTitre.setBounds(40, 20, 200, 50);
+        this.LabelMessage.setBounds(110, 60, 200, 40);
+        
+    	
+        PanelContentt.add(this.connectionlogin);
+        PanelContentt.add(this.connectionemail);
+        PanelContentt.add(this.connectionmdp);
+        PanelContentt.add(this.LabelLogin);
+        PanelContentt.add(this.LabelMDP);
+        PanelContentt.add(this.LabelTitre);
+        PanelContentt.add(this.LabelMessage);
+        PanelContentt.add(this.LabelEmail);
+        
+        PanelContentt.setBounds(0, 0, 500, 700);
+        PanelContentt.setVisible(true);
+        
+        this.remove(PanelContent);
+        PanelContent = PanelContentt;
+        this.validate();
+        this.repaint();
+        this.add(PanelContent);
+        
+        
+        this.validate();
+        this.repaint();
+    	
+    // PanelContent = new JPanel();
+
+    }
+    
+    
+    public void setpanelconnection(){
+    	
+    	// this.PanelContent.setBackground(Color.black);
+        this.PanelContent.add(this.connection);
+        this.PanelContent.add(this.inscription);
+        this.PanelContent.add(this.connectionlogin);
+        this.PanelContent.add(this.connectionmdp);
+        this.PanelContent.add(this.connection);
+        this.PanelContent.add(this.LabelLogin);
+        this.PanelContent.add(this.LabelMDP);
+        this.PanelContent.add(this.LabelTitre);
+        this.PanelContent.add(this.LabelMessage);
+        
+        this.connection.setBounds(40, 170, 200, 40);
+        this.inscription.setBounds(40, 220, 200, 40);
+        this.connectionlogin.setBounds(120, 100, 120, 20);
+        this.connectionmdp.setBounds(120, 130, 120, 20);
+        this.LabelLogin.setBounds(40, 100, 100, 20);
+        this.LabelMDP.setBounds(40, 130, 100, 20);
+        this.LabelTitre.setBounds(40, 20, 200, 50);
+        this.LabelMessage.setBounds(110, 60, 200, 40);
+        this.LabelTitre.setFont( new Font("Serif", Font.PLAIN, 30));
+        
+        this.PanelContent.setBounds(0, 0, 500, 700);
+        this.PanelContent.setVisible(true);
     }
     
     
