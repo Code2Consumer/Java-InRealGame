@@ -15,6 +15,7 @@ public class Gestion extends JFrame implements ActionListener{
     private JButton btnProfile = new JButton("Profile");
     private JButton btnMessagerie = new JButton("Messagerie");
     private JButton btnGuild = new JButton("Guild");
+    private JButton voirguild = new JButton("voidguild");
     private JPanel panel = new JPanel();
     
     
@@ -32,6 +33,11 @@ public class Gestion extends JFrame implements ActionListener{
         this.btnProfile.setBounds(0, 0, 100, 40);
         this.btnMessagerie.setBounds(0, 40, 100, 40);
         this.btnGuild.setBounds(0, 80, 100, 40);
+        this.voirguild.setBounds(0, 120, 100, 40);
+        
+
+    	this.voirguild.setVisible(true);
+    	this.panel.add(this.voirguild);
         
 //        this.btnGuild.
         
@@ -41,6 +47,7 @@ public class Gestion extends JFrame implements ActionListener{
         this.add( this.btnMessagerie );
         this.add( this.btnGuild );
         this.add( this.panel );
+        this.add(this.voirguild);
         
         this.panel.setBackground(Color.BLACK);
         
@@ -77,18 +84,6 @@ public class Gestion extends JFrame implements ActionListener{
             
             guild guild = new guild(12, 2, "nom de la guild", "nomgm", "nom co gm", "nom mmo proincipale", "nom serveur");
             
-//            JPanel pan = this.getallguildspanelsinapanel();
-//            
-//            pan.setBackground(Color.BLUE);
-//            pan.setVisible(true);
-//            
-//            
-//             panel.setPreferredSize( new Dimension(800, 600 ) );
-//        	//pan.setBounds(100, 0, 300, 400);
-//        	scroller.setBounds(100, 0, 400, 500);
-//        	scroller.setVisible(true);
-//
-            
         	Object[] columnNames = {"Guild", "GuildMaster", "MMO Principale", "Server", "id"};
         	Object[][] data =getallguildinaJTable();
             JTable table = new JTable(data, columnNames);
@@ -108,12 +103,24 @@ public class Gestion extends JFrame implements ActionListener{
 
             }
         
-//        if  (source==insert){
-//            Model testance = new Model();
-//            testance.insertsms(this.zoneCode.getText());
-//            
-//            this.zoneCode.getText();
+        if  (source==this.voirguild){
+        	
+        	afficheruneguild();	
+        
+        	
+        	
+        	
+        	
+    }
             
+    }
+    
+    public void afficheruneguild(){
+
+    	this.panel.removeAll();
+    	this.voirguild.setVisible(true);
+    	this.panel.add(this.voirguild);
+    	
     }
     
     public Object[][] getallguildinaJTable(){
@@ -127,7 +134,6 @@ public class Gestion extends JFrame implements ActionListener{
     		data[i][1] = allguilds.get(i).getGM();
     		data[i][2] = allguilds.get(i).getMMO_Principale();
     		data[i][3] = allguilds.get(i).getServeur();
-    	//	data[i][4] = allguilds.get(i).getId()+"";
     		data[i][4] = new JButton("Voir la guild");
         }    	
     	return data;

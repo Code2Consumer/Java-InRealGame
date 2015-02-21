@@ -18,6 +18,7 @@ public class Visuel extends JFrame implements ActionListener{
     private JButton connection = new JButton("Connection");
     private JButton inscription = new JButton("Inscription");
     private JButton inscriptionValider = new JButton("Valider");
+    private JButton sinscrire = new JButton(" S'inscrire ");
     private JLabel LabelLogin = new JLabel(" Login : ");
     private JLabel LabelMDP = new JLabel(" Password :  ");
     private JLabel LabelEmail = new JLabel(" Email : ");
@@ -39,6 +40,7 @@ public class Visuel extends JFrame implements ActionListener{
         this.inscription.addActionListener(this);          
         this.inscriptionValider.addActionListener(this);        
         this.connection.addActionListener(this);
+        this.sinscrire.addActionListener(this);
         
     }
 
@@ -74,6 +76,17 @@ public class Visuel extends JFrame implements ActionListener{
             setpanelinscription();
 
             }
+        if  (source==sinscrire){
+        	
+            System.out.println("sinscrire pressed");
+            
+            String username = connectionlogin.getText();
+            String password = connectionmdp.getText();
+            String email = connectionemail.getText();
+            
+            Utilisateur.inscription(username, email, password);
+            
+            }
     }
     
     public void setpanelinscription() {
@@ -90,9 +103,12 @@ public class Visuel extends JFrame implements ActionListener{
         this.connectionemail.setBounds(120, 160, 120, 20);
         this.LabelLogin.setBounds(40, 100, 100, 20);
         this.LabelMDP.setBounds(40, 130, 100, 20);
-        this.LabelEmail.setBounds(0, 0, 100, 20);
+        this.LabelEmail.setBounds(40, 160, 100, 20);
         this.LabelTitre.setBounds(40, 20, 200, 50);
         this.LabelMessage.setBounds(110, 60, 200, 40);
+        this.sinscrire.setBounds(40, 220, 200, 40);
+        sinscrire.setVisible(true);
+        
         
     	
         PanelContentt.add(this.connectionlogin);
@@ -101,16 +117,17 @@ public class Visuel extends JFrame implements ActionListener{
         PanelContentt.add(this.LabelLogin);
         PanelContentt.add(this.LabelMDP);
         PanelContentt.add(this.LabelTitre);
-        PanelContentt.add(this.LabelMessage);
         PanelContentt.add(this.LabelEmail);
+        PanelContentt.add(this.sinscrire);
+        
+        
+        PanelContentt.add(this.LabelMessage);
         
         PanelContentt.setBounds(0, 0, 500, 700);
         PanelContentt.setVisible(true);
         
         this.remove(PanelContent);
         PanelContent = PanelContentt;
-        this.validate();
-        this.repaint();
         this.add(PanelContent);
         
         

@@ -55,7 +55,7 @@ public class Utilisateur {
 
 
 
-	public void inscription(String username, String email, String password){
+	static public void inscription(String username, String email, String password){
 		BDD unebdd = new BDD();
 		unebdd.chargerPilote();
 		unebdd.seConnecter();
