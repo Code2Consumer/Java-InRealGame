@@ -87,22 +87,26 @@ public class Gestion extends JFrame implements ActionListener{
         	
             System.out.println("source clicked");
             
-            // affichertoutelesguilds();
-            
-            guild guild = new guild(12, 2, "nom de la guild", "nomgm", "nom co gm", "nom mmo proincipale", "nom serveur");
-            
-        	Object[] columnNames = {"Guild", "GuildMaster", "MMO Principale", "Server", "Button"};
+        	Object[] columnNames = {"Guild", "GuildMaster", "MMO Principale", "Server", "id"};
         	Object[][] data =getallguildinaJTable();
             JTable table = new JTable(data, columnNames);
+            
+            table.getColumnModel().getColumn(4).setMinWidth(0);
+            table.getColumnModel().getColumn(4).setMaxWidth(0);
 
-            table.getColumn("Button").setCellRenderer(new ButtonRenderer());
+//            table.getColumn("Button").setCellRenderer(new ButtonRenderer());
             
             table.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent e) {
                   if (e.getClickCount() == 2) {
-
                     int ligneclicked = table.rowAtPoint(e.getPoint());
-                    getguildidbylineclicked(ligneclicked);
+                    Object idguild = getguildidbylineclicked(ligneclicked);
+                    int id =Integer.valueOf((String) idguild);
+                    
+                    
+                    afficheruneguild(id);
+                    
+                    
                   }
                 }
               });
@@ -127,7 +131,6 @@ public class Gestion extends JFrame implements ActionListener{
         
         if  (source==this.voirguild){
         	
-        	afficheruneguild();	
 
     }
             
@@ -137,17 +140,21 @@ public class Gestion extends JFrame implements ActionListener{
 		// TODO Auto-generated method stu
 	}
 
-	public void afficheruneguild(){
-
+	public void afficheruneguild(int idguild){
+		
+		guild guild = new guild(idguild, true);
+		
+		//code21 : afficher la guild dans le panel principale
+		
     	this.panel.removeAll();
-    	this.voirguild.setVisible(true);
+
     	this.panel.add(this.voirguild);
     	
     }
 	
-	public void getguildidbylineclicked(int ligneclicked){
-		String id = this.table.getValueAt(ligneclicked, 2)+"";
-		System.out.println(id);
+	public Object getguildidbylineclicked(int ligneclicked){
+		Object id = this.table.getValueAt(ligneclicked, 4);
+		return id;
 	}
     
     public Object[][] getallguildinaJTable(){
@@ -161,7 +168,7 @@ public class Gestion extends JFrame implements ActionListener{
     		data[i][1] = allguilds.get(i).getGM();
     		data[i][2] = allguilds.get(i).getMMO_Principale();
     		data[i][3] = allguilds.get(i).getServeur();
-    		data[i][4] = new JButton("Voir la guild");
+    		data[i][4] = ""+allguilds.get(i).getId();
         }    	
     	return data;
     }

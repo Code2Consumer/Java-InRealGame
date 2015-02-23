@@ -65,6 +65,11 @@ public class guild {
 		MMO_Principale = mMO_Principale;
 		Serveur = serveur;
 	}
+	public guild(int id, boolean getidornot){
+		super();
+		this.setId(id);
+		if(getidornot){ this.getguildbyguildid(id);	}
+	}
 	public guild() {
 		super();
 	}
