@@ -86,6 +86,8 @@ public class Visuel extends JFrame implements ActionListener{
             
             Utilisateur.inscription(username, email, password);
             
+            setpanelconnection();
+            
             }
     }
     
@@ -129,28 +131,25 @@ public class Visuel extends JFrame implements ActionListener{
         this.remove(PanelContent);
         PanelContent = PanelContentt;
         this.add(PanelContent);
-        
-        
+
         this.validate();
         this.repaint();
-    	
-    // PanelContent = new JPanel();
 
+    // PanelContent = new JPanel();
     }
     
     
     public void setpanelconnection(){
     	
+    	JPanel PanelContentt = new JPanel(new BorderLayout());
+    	
+    	this.remove(PanelContent);
+    	
+        this.validate();
+        this.repaint();
+    	
     	// this.PanelContent.setBackground(Color.black);
-        this.PanelContent.add(this.connection);
-        this.PanelContent.add(this.inscription);
-        this.PanelContent.add(this.connectionlogin);
-        this.PanelContent.add(this.connectionmdp);
-        this.PanelContent.add(this.connection);
-        this.PanelContent.add(this.LabelLogin);
-        this.PanelContent.add(this.LabelMDP);
-        this.PanelContent.add(this.LabelTitre);
-        this.PanelContent.add(this.LabelMessage);
+
         
         this.connection.setBounds(40, 170, 200, 40);
         this.inscription.setBounds(40, 220, 200, 40);
@@ -162,8 +161,25 @@ public class Visuel extends JFrame implements ActionListener{
         this.LabelMessage.setBounds(110, 60, 200, 40);
         this.LabelTitre.setFont( new Font("Serif", Font.PLAIN, 30));
         
-        this.PanelContent.setBounds(0, 0, 500, 700);
-        this.PanelContent.setVisible(true);
+        PanelContentt.setBounds(0, 0, 500, 700);
+        PanelContentt.setVisible(true);
+        
+        PanelContentt.add(this.connection);
+        PanelContentt.add(this.inscription);
+        PanelContentt.add(this.connectionlogin);
+        PanelContentt.add(this.connectionmdp);
+        PanelContentt.add(this.connection);
+        PanelContentt.add(this.LabelLogin);
+        PanelContentt.add(this.LabelMDP);
+        PanelContentt.add(this.LabelTitre);
+        PanelContentt.add(this.LabelMessage);
+        
+        PanelContent = PanelContentt;
+        
+        this.add(this.PanelContent);
+        
+        this.validate();
+        this.repaint();
     }
     
     

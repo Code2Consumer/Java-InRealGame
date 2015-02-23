@@ -61,22 +61,18 @@ public class Utilisateur {
 		unebdd.seConnecter();
 		Connection con = unebdd.getMaConnection();
 		
-        String sql =  " INSERT INTO `utilisateur`(`id`, `username`, `username_canonical`, `email`, `email_canonical`, `password`) VALUES (NULL, '"+username+"','"+username+"', '"+email+"', '"+email+"', '"+password+"')  " ;
+        String sql = " INSERT INTO `utilisateur`(`id`, `username`, `username_canonical`, `email`, `email_canonical`, `password`, `enabled`, `salt`, `locked`, `expired`, `roles`, `credentials_expired`, `credentials_expire_at`)"
+        		+ "VALUES (NULL, '"+username+"','"+username+"javausername', '"+email+"', '"+email+"emailuserjava', '"+password+"', '1', 'eg5dcapmiko4oscg44ksk0440oksk4w', '0', '0', 'a:0:{}', '0', NULL ) ";
         
         try {
 	        Statement smt = con.createStatement() ;
-	        ResultSet rs = smt.executeQuery(sql) ;
-	        
-	        while (rs.next()) {
-	        	
-	            System.out.println( rs.getString("mess") ) ;
-	            
-	        }
+	        smt.executeUpdate(sql);
 	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			
-			System.out.println("un truk a pas marcher ");
+			System.out.println(" Impossible d'inscrire ");
+			System.out.println(""+e);
 			
 		}
 	

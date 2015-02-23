@@ -2,12 +2,18 @@ package General;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 
 import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 @SuppressWarnings("serial")
 public class Gestion extends JFrame implements ActionListener{
@@ -16,6 +22,7 @@ public class Gestion extends JFrame implements ActionListener{
     private JButton btnMessagerie = new JButton("Messagerie");
     private JButton btnGuild = new JButton("Guild");
     private JButton voirguild = new JButton("voidguild");
+    private JTable table = new JTable();
     private JPanel panel = new JPanel();
     
     
@@ -84,9 +91,24 @@ public class Gestion extends JFrame implements ActionListener{
             
             guild guild = new guild(12, 2, "nom de la guild", "nomgm", "nom co gm", "nom mmo proincipale", "nom serveur");
             
-        	Object[] columnNames = {"Guild", "GuildMaster", "MMO Principale", "Server", "id"};
+        	Object[] columnNames = {"Guild", "GuildMaster", "MMO Principale", "Server", "Button"};
         	Object[][] data =getallguildinaJTable();
             JTable table = new JTable(data, columnNames);
+
+            table.getColumn("Button").setCellRenderer(new ButtonRenderer());
+            
+            table.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent e) {
+                  if (e.getClickCount() == 2) {
+
+                    int ligneclicked = table.rowAtPoint(e.getPoint());
+                    getguildidbylineclicked(ligneclicked);
+                  }
+                }
+              });
+            
+            this.table=table;
+        
         	JScrollPane scroller = new JScrollPane( table );
 
      
@@ -106,22 +128,27 @@ public class Gestion extends JFrame implements ActionListener{
         if  (source==this.voirguild){
         	
         	afficheruneguild();	
-        
-        	
-        	
-        	
-        	
+
     }
             
     }
     
-    public void afficheruneguild(){
+    protected void mouseDblClicked(int row, int column) {
+		// TODO Auto-generated method stu
+	}
+
+	public void afficheruneguild(){
 
     	this.panel.removeAll();
     	this.voirguild.setVisible(true);
     	this.panel.add(this.voirguild);
     	
     }
+	
+	public void getguildidbylineclicked(int ligneclicked){
+		String id = this.table.getValueAt(ligneclicked, 2)+"";
+		System.out.println(id);
+	}
     
     public Object[][] getallguildinaJTable(){
     	
@@ -209,4 +236,25 @@ public class Gestion extends JFrame implements ActionListener{
     
     
     
+}
+
+class ButtonRenderer extends JButton implements TableCellRenderer {
+
+    public ButtonRenderer() {
+        setOpaque(true);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+        if (isSelected) {
+            setForeground(table.getSelectionForeground());
+            setBackground(table.getSelectionBackground());
+        } else {
+            setForeground(table.getForeground());
+            setBackground(UIManager.getColor("Button.background"));
+        }
+        setText((value == null) ? "" : value.toString());
+        return this;
+    }
 }
