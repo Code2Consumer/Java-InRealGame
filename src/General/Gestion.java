@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,12 @@ public class Gestion extends JFrame implements ActionListener{
     private JButton voirguild = new JButton("voidguild");
     private JTable table = new JTable();
     private JPanel panel = new JPanel();
+	private JScrollPane scroller = new JScrollPane();
+    // Guild affichage :
+    
+    private JLabel guildNom = new JLabel();
+    private JLabel guildCandidature = new JLabel();
+    
     
     
 //    private static Annonceur unAnnonceur;
@@ -56,33 +63,21 @@ public class Gestion extends JFrame implements ActionListener{
         this.add( this.panel );
         this.add(this.voirguild);
         
-        this.panel.setBackground(Color.BLACK);
-        
-       
-        
-//        this.add(this.valider);
-//        this.add(this.insert);
-        
-        	btnGuild.addActionListener(this);
-//        insert.addActionListener(this);
+        btnGuild.addActionListener(this);
 
-        
         this.setVisible(true);
         
     }
 
     public static void main(String[] args) {
-    	
         Gestion gest = new Gestion();
-
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         
         Object  source=e.getSource();
-     
-        
+            
         if  (source==btnGuild){
         	
             System.out.println("source clicked");
@@ -94,8 +89,6 @@ public class Gestion extends JFrame implements ActionListener{
             table.getColumnModel().getColumn(4).setMinWidth(0);
             table.getColumnModel().getColumn(4).setMaxWidth(0);
 
-//            table.getColumn("Button").setCellRenderer(new ButtonRenderer());
-            
             table.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent e) {
                   if (e.getClickCount() == 2) {
@@ -103,10 +96,8 @@ public class Gestion extends JFrame implements ActionListener{
                     Object idguild = getguildidbylineclicked(ligneclicked);
                     int id =Integer.valueOf((String) idguild);
                     
-                    
                     afficheruneguild(id);
-                    
-                    
+
                   }
                 }
               });
@@ -114,16 +105,11 @@ public class Gestion extends JFrame implements ActionListener{
             this.table=table;
         
         	JScrollPane scroller = new JScrollPane( table );
-
-     
-          	// pan.setBounds(100, 0, 300, 400);
       		scroller.setBounds(100, 0, 400, 500);
       		scroller.setVisible(true);
-        	
+      		this.scroller = scroller;
         	this.remove( this.panel );
-        	
         	this.getContentPane().add( scroller);
-            
             this.validate();
             this.repaint();
 
@@ -143,13 +129,40 @@ public class Gestion extends JFrame implements ActionListener{
 	public void afficheruneguild(int idguild){
 		
 		guild guild = new guild(idguild, true);
-		
-		//code21 : afficher la guild dans le panel principale
-		
-    	this.panel.removeAll();
 
-    	this.panel.add(this.voirguild);
-    	
+//		this.getContentPane().removeAll();
+		
+		this.getContentPane().remove(this.panel);
+		this.getContentPane().remove(this.scroller);
+		
+		this.panel.removeAll();
+        this.validate();
+        this.repaint();
+        
+        // Nom de la guil 
+        this.guildNom = new JLabel(guild.getGuild_name());
+        this.guildNom.setBounds(40, 20, 200, 50);
+        this.guildNom.setFont( new Font("Serif", Font.PLAIN, 30));
+        this.panel.add(this.guildNom);  
+        
+        // Candiatures
+        
+        
+        
+        
+        
+        // Actualité
+        JScrollBar scroll = new JScrollBar(); 
+        scroll.setBounds(10, 100, 400, 400);
+        scroll.setBackground(Color.BLACK);
+        this.panel.add(scroll);
+        
+        
+        
+		this.getContentPane().add(this.panel);
+		
+        this.validate();
+        this.repaint();
     }
 	
 	public Object getguildidbylineclicked(int ligneclicked){
@@ -158,18 +171,17 @@ public class Gestion extends JFrame implements ActionListener{
 	}
     
     public Object[][] getallguildinaJTable(){
-    	
     	LinkedList<guild> allguilds = guild.getallguilds();
-    	
     	Object[][] data = new Object[allguilds.size()][5];
-
+    	
     	for (int i = 0; i < allguilds.size(); i++) {
     		data[i][0] = allguilds.get(i).getGuild_name();
     		data[i][1] = allguilds.get(i).getGM();
     		data[i][2] = allguilds.get(i).getMMO_Principale();
     		data[i][3] = allguilds.get(i).getServeur();
     		data[i][4] = ""+allguilds.get(i).getId();
-        }    	
+        }    
+    	
     	return data;
     }
     
@@ -223,22 +235,6 @@ public class Gestion extends JFrame implements ActionListener{
       Gpanel.setVisible(true);
       
       return Gpanel;
-
-
-        
-//        GuildName.setBounds(0, 10, 40, 50);
-//        GuildgM.setBounds(0, 10, 40, 500);
-//        GuildMmoPrincipale.setBounds(0, 10, 40, 50);
-//        GuildServeur.setBounds(0, 10, 40, 50);
-        
-//        GuildName;
-//        GuildgM;
-//        GuildMmoPrincipale;
-//        GuildServeur;
-        
-
-//        this.panel.setBounds(100, 0, 400, 500);
-//        this.add( this.btnProfile );
     }
     
     

@@ -89,20 +89,18 @@ public class guild {
 	        ResultSet rs = smt.executeQuery(sql) ;
 	        
 	          while (rs.next()) {
-	        	  
 	        	  this.setCoGM( rs.getString("CoGM") );
 	        	  this.setGM( rs.getString("GM") );
-	        	  this.setGM_id(Integer.parseInt(rs.getString(" GM_id")));
+	        	  this.setGM_id(Integer.parseInt(rs.getString("GM_id")));
 	        	  this.setGuild_name( rs.getString("Guild_name") );
 	        	  this.setId( Integer.parseInt( rs.getString("id") ));
 	        	  this.setMMO_Principale( rs.getString("MMO_Principale") );
-	        	  this.setServeur(( rs.getString("Serveur")));
-	        	  
+	        	  this.setServeur(( rs.getString("Serveur"))); 
 	           }
 	          
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(" Impossible de rechercher la Guild. ");
+			System.out.println(" Impossible de rechercher la Guild. "+e);
 		}
         
 	

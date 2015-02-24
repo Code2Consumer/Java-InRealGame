@@ -72,7 +72,7 @@ public class candidature {
 		unebdd.seConnecter();
 		Connection con = unebdd.getMaConnection();
 		
-        String sql =  "" ;
+        String sql =  "  " ;
         
         try {
 	        Statement smt = con.createStatement() ;

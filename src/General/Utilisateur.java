@@ -67,7 +67,6 @@ public class Utilisateur {
         try {
 	        Statement smt = con.createStatement() ;
 	        smt.executeUpdate(sql);
-	        
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			
