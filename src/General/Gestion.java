@@ -146,16 +146,33 @@ public class Gestion extends JFrame implements ActionListener{
         this.panel.add(this.guildNom);  
         
         // Candiatures
+        	// Jbuton ? 
+        	// file d'actualitÃ© candidatures ? 
         
         
         
         
+        // Actualitï¿½
+        JPanel uneactu = new JPanel();
+        uneactu.setBounds(0, 0, 200, 100);
         
-        // Actualité
+        JLabel mess = new JLabel(" message d'essay ");
+        mess.setBounds(0, 0, 20, 10);
+        
+        JLabel nom = new JLabel(" nom dessay ");
+        nom.setBounds(10, 10, 20, 10);
+                
+        
+        
+        
+        
         JScrollBar scroll = new JScrollBar(); 
         scroll.setBounds(10, 100, 400, 400);
         scroll.setBackground(Color.BLACK);
         this.panel.add(scroll);
+        
+        
+        
         
         
         

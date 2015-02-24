@@ -50,7 +50,6 @@ public class guildpost {
 	}
 	
 	public void getallpostforguild(int id){
-		
 
 		BDD unebdd = new BDD();
 		unebdd.chargerPilote();
