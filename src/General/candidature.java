@@ -65,6 +65,35 @@ public class candidature {
 		this.date = date;
 	}
 	
+	public void getcandidaturebyguildid(int id){
+		
+
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+		
+        String sql =  " select * from candidature where guild_id = '"+id+"' " ;
+        
+        try {
+	        Statement smt = con.createStatement() ;
+	        ResultSet rs = smt.executeQuery(sql) ;
+
+	        
+	          while (rs.next()) {
+	        	  if ( rs.getString("id") != null ) {
+//	        		  this.id = Integer.parseInt(rs.getString("id") );
+//	        		  this.username = rs.getString("username");
+//	        		  this.email = rs.getString("email"); 
+//	        		  this.password = rs.getString("password");
+	              }
+	          }    
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("un truk a pas marcher ");
+		}	
+	}
+	
 	
 	public void createCandidature(){
 		BDD unebdd = new BDD();
