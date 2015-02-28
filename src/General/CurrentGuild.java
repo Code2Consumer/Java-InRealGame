@@ -4,6 +4,16 @@ public class CurrentGuild {
 	static private int id, GM_id;
 	static private String Guild_name, GM, CoGM, MMO_Principale, Serveur;
 	
+	public static void setCurrentGuild(guild guild){
+		CurrentGuild.setId( guild.getId() );
+		CurrentGuild.setGM_id( guild.getGM_id() );
+		CurrentGuild.setGuild_name( guild.getGuild_name() );
+		CurrentGuild.setGM( guild.getGM() );
+		CurrentGuild.setCoGM( guild.getCoGM() );
+		CurrentGuild.setMMO_Principale( guild.getMMO_Principale() );
+		CurrentGuild.setServeur( guild.getServeur() );
+	}
+	
 	public static int getId() {
 		return id;
 	}

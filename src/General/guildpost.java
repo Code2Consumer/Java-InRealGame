@@ -5,6 +5,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class guildpost {
@@ -48,9 +51,20 @@ public class guildpost {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	public void getallpostforguild(int id){
-
+	public void setDate(String date) {
+		
+        DateFormat formatter = null;
+        Date convertedDate = null;
+        String yyyyMMdd = "20110914";
+        formatter = new SimpleDateFormat("yyyyMMdd");
+        try {
+			convertedDate = (Date) formatter.parse(yyyyMMdd);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		this.date = convertedDate;
+	}
+	public static LinkedList<guildpost> getallpostforguild(int id){
 		BDD unebdd = new BDD();
 		unebdd.chargerPilote();
 		unebdd.seConnecter();
@@ -58,24 +72,28 @@ public class guildpost {
 		
         String sql =  " select * from guildpost where GuildId = "+id ;
         
+        LinkedList<guildpost> touslesposts = new LinkedList<guildpost>();
+        guildpost guildpost = new guildpost();
+
         try {
 	        Statement smt = con.createStatement() ;
 	        ResultSet rs = smt.executeQuery(sql) ;
-	        LinkedList<guildpost> touslesposts = new LinkedList<guildpost>();
 	        
-//	        ecrire un for instead of while 
-//	          while (rs.next()) {
-//	        	  touslesposts.get(i)
-//	        	  this.setId(Integer.parseInt(rs.getString("id")));
-//	        	  this.setUserid((Integer.parseInt(rs.getString("userid"))));
-//	        	  this.setGuildid(Integer.parseInt(rs.getString("Guildid")));
-//	        	  this.setUsername( rs.getString("username"));
-//	           }
+	          while (rs.next()) {
+	        	  guildpost.setId( Integer.parseInt(rs.getString("id"))  );
+	        	  guildpost.setGuildId(Integer.parseInt(rs.getString("GuildId")));
+	        	  guildpost.setUserId( Integer.parseInt(rs.getString("UserId")) );
+	        	  guildpost.setUserName( rs.getString("UserName"));
+	        	  guildpost.setDate( rs.getString("Date"));
+	        	  guildpost.setMessage( rs.getString("Message"));
+	        	  touslesposts.add(guildpost);
+	           }
+	          
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(" Impossible de recuperer ce membre. ");
 		}
-		
+		return touslesposts;
 	}
 	
 

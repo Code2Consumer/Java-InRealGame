@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.*;
@@ -125,6 +126,7 @@ public class Gestion extends JFrame implements ActionListener {
 	public void afficheruneguild(int idguild) {
 
 		guild guild = new guild(idguild, true);
+		CurrentGuild.setCurrentGuild(guild);
 
 		// this.getContentPane().removeAll();
 
@@ -137,7 +139,7 @@ public class Gestion extends JFrame implements ActionListener {
 		this.validate();
 		this.repaint();
 
-		// Nom de la guil
+		// Nom de la guild
 		this.guildNom = new JLabel(guild.getGuild_name());
 		this.guildNom.setBounds(40, 20, 20, 50);
 		this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -148,13 +150,17 @@ public class Gestion extends JFrame implements ActionListener {
 		// file d'actualité candidatures ?
 
 		// Actualit�
-		JPanel uneactu = new JPanel();
+		JPanel uneactu = addallguildpost();
 		// uneactu.setAlignmentX(100);
 		// uneactu.setAlignmentY(100);
-		uneactu.setBounds(10, 200, 250, 250);
+
 		uneactu.setBackground(Color.GREEN);
 		uneactu.setVisible(true);
-
+		JScrollPane scroll = new JScrollPane(uneactu);
+		scroll.setBounds(10, 200, 250, 250);
+		
+		scroll.add( addallguildpost() );
+		
 //		uneactu.add(this.guildNom);
 
 		// JLabel mess = new JLabel(" message d'essay ");
@@ -168,7 +174,7 @@ public class Gestion extends JFrame implements ActionListener {
 		// uneactu.add(mess);
 		// uneactu.add(nom);
 
-		this.panel.add(uneactu);
+		this.panel.add(scroll);
 		this.panel.setBackground(Color.RED);
 
 		// scroll.setBounds(150, 500, 10, 100);
@@ -181,6 +187,28 @@ public class Gestion extends JFrame implements ActionListener {
 		this.repaint();
 	}
 
+	public JPanel addallguildpost(){
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setVisible(true);
+		JPanel panelpost = new JPanel();
+		panelpost.setVisible(true);
+		panelpost.setLayout(null);
+		LinkedList<guildpost> allposts=guildpost.getallpostforguild( CurrentGuild.getId() );
+		int hauteur = 0;
+		
+        for (int i = 0; i < allposts.size(); i++) {
+//            allposts.get(i);
+        	panelpost.setBounds(0, hauteur, 300, 100);
+        	panelpost.setBackground(Color.blue);
+        	panel.add( panelpost );
+        }
+		
+
+		return panel;
+	}
+	
 	public Object getguildidbylineclicked(int ligneclicked) {
 		Object id = this.table.getValueAt(ligneclicked, 4);
 		return id;
