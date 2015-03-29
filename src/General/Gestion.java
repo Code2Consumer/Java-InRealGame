@@ -150,16 +150,14 @@ public class Gestion extends JFrame implements ActionListener {
 		// file d'actualité candidatures ?
 
 		// Actualit�
-		JPanel uneactu = addallguildpost();
-		// uneactu.setAlignmentX(100);
-		// uneactu.setAlignmentY(100);
+//
+//		uneactu.setBackground(Color.GREEN);
+//		uneactu.setVisible(true);
+		JScrollPane scroll = addallguildpost();
 
-		uneactu.setBackground(Color.GREEN);
-		uneactu.setVisible(true);
-		JScrollPane scroll = new JScrollPane(uneactu);
-		scroll.setBounds(10, 200, 250, 250);
-		
-		scroll.add( addallguildpost() );
+
+	
+//		scroll.add( addallguildpost() );
 		
 //		uneactu.add(this.guildNom);
 
@@ -174,7 +172,7 @@ public class Gestion extends JFrame implements ActionListener {
 		// uneactu.add(mess);
 		// uneactu.add(nom);
 
-		this.panel.add(scroll);
+		this.panel.add(scroll, BorderLayout.CENTER);
 		this.panel.setBackground(Color.RED);
 
 		// scroll.setBounds(150, 500, 10, 100);
@@ -187,26 +185,47 @@ public class Gestion extends JFrame implements ActionListener {
 		this.repaint();
 	}
 
-	public JPanel addallguildpost(){
-		
+	public JScrollPane addallguildpost(){
 		JPanel panel = new JPanel();
-		panel.setLayout(null);
+		panel.setLayout(null);	
+		panel.setBounds( 0, 10, 50, 50);
 		panel.setVisible(true);
-		JPanel panelpost = new JPanel();
-		panelpost.setVisible(true);
-		panelpost.setLayout(null);
+
 		LinkedList<guildpost> allposts=guildpost.getallpostforguild( CurrentGuild.getId() );
 		int hauteur = 0;
 		
-        for (int i = 0; i < allposts.size(); i++) {
-//            allposts.get(i);
-        	panelpost.setBounds(0, hauteur, 300, 100);
-        	panelpost.setBackground(Color.blue);
-        	panel.add( panelpost );
-        }
-		
+        for (int i = 0; i < 10; i++) {
+        	if(allposts.get(i) != null){
+        		
+        		JLabel Auteur = new JLabel("//"+allposts.get(i).getUserName()+"//haha");
+        		Auteur.setBounds( 10, hauteur, 190, 50);
+        		Auteur.setBackground(Color.BLUE);
+        		panel.add( Auteur );
+        		JLabel Message = new JLabel("//"+allposts.get(i).getMessage()+"//haha");
+        		Message.setBounds( 10, hauteur+10, 190, 50);
+        		Message.setBackground(Color.YELLOW);
+        		panel.add( Message );
+//        		JLabel date = new JLabel("//"+allposts.get(i).getMessage()+"//haha");
+//        		guildNom.setBounds( 10, hauteur, 20, 50);
+//        		panel.add( guildNom );
+        		        		
+        		hauteur += 30;
 
-		return panel;
+//	        	  guildpost.setId( Integer.parseInt(rs.getString("id"))  );
+//	        	  guildpost.setGuildId(Integer.parseInt(rs.getString("GuildId")));
+//	        	  guildpost.setUserId( Integer.parseInt(rs.getString("UserId")) );
+//	        	  guildpost.setUserName( rs.getString("UserName"));
+////	        	  guildpost.setDate( rs.getString("Date") );
+//	        	  guildpost.setMessage( rs.getString("Message"));
+//	        	  touslesposts.add(guildpost);
+        		
+        	}
+        }
+
+		JScrollPane scroll = new JScrollPane(panel);
+		scroll.setVisible(true);
+		scroll.setBounds( 20, 200, 220, 250);
+		return scroll;
 	}
 	
 	public Object getguildidbylineclicked(int ligneclicked) {

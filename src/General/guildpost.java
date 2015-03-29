@@ -40,7 +40,7 @@ public class guildpost {
 		UserName = userName;
 	}
 	public String getMessage() {
-		return Message;
+		return this.Message;
 	}
 	public void setMessage(String message) {
 		Message = message;
@@ -52,7 +52,6 @@ public class guildpost {
 		this.date = date;
 	}
 	public void setDate(String date) {
-		
         DateFormat formatter = null;
         Date convertedDate = null;
         String yyyyMMdd = "20110914";
@@ -84,9 +83,10 @@ public class guildpost {
 	        	  guildpost.setGuildId(Integer.parseInt(rs.getString("GuildId")));
 	        	  guildpost.setUserId( Integer.parseInt(rs.getString("UserId")) );
 	        	  guildpost.setUserName( rs.getString("UserName"));
-	        	  guildpost.setDate( rs.getString("Date"));
+//	        	  guildpost.setDate( rs.getString("Date") );
 	        	  guildpost.setMessage( rs.getString("Message"));
 	        	  touslesposts.add(guildpost);
+	        	  guildpost = new guildpost();
 	           }
 	          
 		} catch (SQLException e) {
