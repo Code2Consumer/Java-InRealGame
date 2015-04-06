@@ -35,8 +35,6 @@ public class Utilisateur {
         try {
 	        Statement smt = con.createStatement() ;
 	        ResultSet rs = smt.executeQuery(sql) ;
-
-	        
 	          while (rs.next()) {
 	        	  if ( rs.getString("id") != null ) {
 	        		  this.id = Integer.parseInt(rs.getString("id") );
@@ -45,9 +43,12 @@ public class Utilisateur {
 	        		  this.password = rs.getString("password");
 	              }
 	          }    
+	          
+//	          CurrentUser.loadcurrentuser(this);
+	          
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("un truk a pas marcher ");
+			System.out.println(" connection impossible:"+e);
 		}
         
 	}

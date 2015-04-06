@@ -30,5 +30,16 @@ public class CurrentUser {
 		User.password = password;
 	}
 	
+	public static void loadcurrentuser(Utilisateur user){
+		CurrentUser.setId( user.getId() );
+		CurrentUser.setUsername( user.getUsername() );
+		CurrentUser.setEmail( user.getEmail() );
+		CurrentUser.setPassword( user.getPassword() );
+	}
+	
+	public static Utilisateur getcurrentuser(){
+		Utilisateur user = new Utilisateur(CurrentUser.getId(), CurrentUser.getUsername(), CurrentUser.getEmail(), CurrentUser.getPassword());
+		return user;
+	}
 	
 }

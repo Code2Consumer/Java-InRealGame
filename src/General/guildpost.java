@@ -96,5 +96,23 @@ public class guildpost {
 		return touslesposts;
 	}
 	
+	public static void envoyerguildpost(Utilisateur user, String message){
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+        String sql =  " INSERT INTO `symfony`.`guildpost` (`id`, `GuildId`, `UserId`, `UserName`, `Date`, `Message`) VALUES (NULL, '"+CurrentGuild.getId()+"', '"+user.getId()+"', '"+user.getUsername()+"', CURRENT_DATE(), '"+message+"'); " ;
+        
+        try {
+	        Statement smt = con.createStatement() ;
+	        smt.executeUpdate(sql) ;
+  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" envois du message impossible :" + e);
+		}
+		
+		
+	}
 
 }

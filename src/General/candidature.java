@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 
 public class candidature {
 	private int id, Guild_Id, user_id;
@@ -65,33 +66,45 @@ public class candidature {
 		this.date = date;
 	}
 	
-	public void getcandidaturebyguildid(int id){
+	public static LinkedList<candidature> getcandidaturebyguildid(int id){
 		
-
 		BDD unebdd = new BDD();
 		unebdd.chargerPilote();
 		unebdd.seConnecter();
 		Connection con = unebdd.getMaConnection();
-		
-        String sql =  " select * from candidature where guild_id = '"+id+"' " ;
+        String sql =  " select * from candidature where guild_id = '"+id+"' ";
         
         try {
 	        Statement smt = con.createStatement() ;
 	        ResultSet rs = smt.executeQuery(sql) ;
-
+	        
+	        LinkedList<candidature> allcandidatures = new LinkedList<candidature>();
+	        candidature cand = new candidature();
 	        
 	          while (rs.next()) {
 	        	  if ( rs.getString("id") != null ) {
-//	        		  this.id = Integer.parseInt(rs.getString("id") );
-//	        		  this.username = rs.getString("username");
-//	        		  this.email = rs.getString("email"); 
-//	        		  this.password = rs.getString("password");
+	        		  cand = new candidature();
+	        		  
+	        		  cand.id = Integer.parseInt(rs.getString("id") );
+	        		  cand.Guild_Id = Integer.parseInt(rs.getString("Guild_id") );
+	        		  cand.user_id = Integer.parseInt(rs.getString("user_id") );
+	        		  cand.guild_name = rs.getString("guild_name") ;
+	        		  cand.user_name =rs.getString("user_name") ;
+	        		  cand.message =rs.getString("message") ;
+	        		  cand.message_titre =rs.getString("message_titre") ;
+	        		  cand.situation =rs.getString("situation") ;
+
+	        		  allcandidatures.add(cand);
 	              }
 	          }    
+	          
+	          return allcandidatures;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("un truk a pas marcher ");
 		}	
+        
+        return null;
 	}
 	
 	

@@ -146,8 +146,27 @@ new guild(
 		return null; 
 	}
 	
+	public static boolean createguilde(String GuildName, String GMname, String CoGm, int GM_id, String MMO_p, String serveur){
+		
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+        String sql =  " INSERT INTO `symfony`.`guild` (`id`, `Guild_name`, `GM`, `CoGM`, `GM_id`, `MMO_Principale`, `Serveur`) VALUES (NULL, '"+GuildName+"', '"+GMname+"', '"+CoGm+"', '"+GM_id+"', '"+MMO_p+"', '"+serveur+"'); " ;
+        
+        try {
+	        Statement smt = con.createStatement() ;
+	        smt.executeUpdate(sql) ;
+  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" envois du message impossible :" + e);
+			return false;
+		}
+        return true ;
+	}
+	
     public static void main(String[] args) {
-    	
     	LinkedList<guild> allguilds = guild.getallguilds();
     	
         for (int i = 0; i < allguilds.size(); i++) {

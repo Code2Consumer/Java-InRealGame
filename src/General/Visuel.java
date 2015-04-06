@@ -61,7 +61,7 @@ public class Visuel extends JFrame implements ActionListener{
             ut.connection(login, mdp);
             
             if( ut.getId() != 0 ){
-            		Gestion gest = new Gestion();
+            		Gestion gest = new Gestion( ut );
             		this.setVisible(false); //you can't see me!
             		this.dispose(); //Destroy the JFrame object
             }else{
@@ -70,8 +70,6 @@ public class Visuel extends JFrame implements ActionListener{
         }
         
         if  (source==inscription){
-        	
-
             System.out.println("inscription pressed");
             setpanelinscription();
 
@@ -150,6 +148,7 @@ public class Visuel extends JFrame implements ActionListener{
     	
     	// this.PanelContent.setBackground(Color.black);
 
+        // declaration es bailles !
         
         this.connection.setBounds(40, 170, 200, 40);
         this.inscription.setBounds(40, 220, 200, 40);
