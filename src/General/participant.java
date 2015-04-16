@@ -1,8 +1,15 @@
 package General;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class participant {
-	private int id, event_id, user_id;
-	private String user_name, role;
+	private int id=0;
+	private int event_id, user_id;
+	private String role;
+	private String user_name;
 	
 	
 	public int getId() {
@@ -36,5 +43,49 @@ public class participant {
 		this.role = role;
 	}
 	
+	public static participant getparticipant(int event_id, int user_id){
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+	    String sql =  " select * from participant where event_id = '"+event_id+"' and user_id = '"+user_id+"' ";
+	    
+	    try {
+	        Statement smt = con.createStatement() ;
+	        ResultSet rs = smt.executeQuery(sql) ;
+	        participant par = new participant();
+	          while (rs.next()) {
+	        	  if ( rs.getString("id") != null ) {
+	        		  par.id=Integer.parseInt(rs.getString("id"));
+	        		  par.event_id=Integer.parseInt(rs.getString("event_id"));
+	        		  par.user_id=Integer.parseInt(rs.getString("user_id"));
+	        		  par.user_name=rs.getString("user_name");
+	        		  par.role=rs.getString("role");
+	        		  return par;
+	              }
+	          }    
+	          
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" Connection impossible ");
+		}
+		return null;
+	}
+	
+	public static void createparticipant(int event_id, int user_id, String user_name, String role){
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+        String sql =  " INSERT INTO `symfony`.`participant` (`id`, `event_id`, `user_id`, `user_name`, `role`) VALUES (NULL, '"+event_id+"', '"+user_id+"', '"+user_name+"', '"+role+"'); ";
+        try {
+	        Statement smt = con.createStatement() ;
+	        smt.executeUpdate(sql) ;
+  
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" impossible de s'inscrire :" + e);
+		}
+	}
 	
 }

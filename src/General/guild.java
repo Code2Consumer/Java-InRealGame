@@ -160,7 +160,6 @@ new guild(
   
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(" envois du message impossible :" + e);
 			return false;
 		}
         return true ;
@@ -168,10 +167,6 @@ new guild(
 	
     public static void main(String[] args) {
     	LinkedList<guild> allguilds = guild.getallguilds();
-    	
-        for (int i = 0; i < allguilds.size(); i++) {
-            System.out.println(allguilds.get(i).GM );
-        }
         
     }
 

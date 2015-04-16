@@ -25,8 +25,7 @@ public class Gestion extends JFrame implements ActionListener {
 
 	private JButton btnProfile = new JButton("Profile");
 	private JButton btnMessagerie = new JButton("Messagerie");
-	private JButton btnGuild = new JButton("Guild");
-	private JButton voirguild = new JButton("voidguild");
+	private JButton btnGuild = new JButton("Guilde");
 	private JTable table = new JTable();
 	private JPanel panel = new JPanel();
 	private JScrollPane scroller = new JScrollPane();
@@ -45,6 +44,8 @@ public class Gestion extends JFrame implements ActionListener {
 	// Guild candidatures :
 	
 	public LinkedList<JButton> allcandidaturesbtn = new LinkedList<JButton>();
+	public JButton acceptercandidaturebtn = new JButton("Accepter la candidature");
+	public JTextArea candidaturemessage=new JTextArea();
 	
 	// Guild creation :
 	public JTextField Guildnamecreate = new JTextField();
@@ -52,7 +53,20 @@ public class Gestion extends JFrame implements ActionListener {
 	public JTextField MMOcreate = new JTextField();
 	public JTextField Serveurcreate = new JTextField();
 	public JButton createguildebtn = new JButton("Valider");
-
+	
+	//Guild events :
+	public LinkedList<JButton> alleventsbtn = new LinkedList<JButton>();
+	public JComboBox role = new JComboBox();
+	public JButton eventsinscrirebtn = new JButton("S'inscrire");
+	
+	// Messagerie
+	public JButton nouveaumessage = new JButton("Nouveau Message");
+	public JButton envoyermessage = new JButton("Envoyer");
+	public JTextField name_destinataire = new JTextField();
+	public JTextField messagerie_titre = new JTextField();
+	public JTextArea messagerie_message = new JTextArea();
+	
+	
 	// private static Annonceur unAnnonceur;
 
 	public Gestion(Utilisateur user) {
@@ -65,14 +79,9 @@ public class Gestion extends JFrame implements ActionListener {
 		this.setTitle("In Real Game");
 		this.setResizable(false);
 
-		this.btnProfile.setBounds(0, 0, 100, 40);
-		this.btnMessagerie.setBounds(0, 40, 100, 40);
-		this.btnGuild.setBounds(0, 80, 100, 40);
-		this.voirguild.setBounds(0, 120, 100, 40);
-
-		this.voirguild.setVisible(true);
-		this.voirguild.addActionListener(this);
-		this.panel.add(this.voirguild);
+		this.btnGuild.setBounds(0, 0, 100, 166);
+		this.btnMessagerie.setBounds(0, 166, 100, 166);
+		this.btnProfile.setBounds(0, 332, 100, 166);
 
 		this.panel.setBounds(100, 0, 400, 500);
 
@@ -80,13 +89,14 @@ public class Gestion extends JFrame implements ActionListener {
 		this.add(this.btnMessagerie);
 		this.add(this.btnGuild);
 		this.add(this.panel);
-		this.add(this.voirguild);
-
 		btnGuild.addActionListener(this);
+		this.btnMessagerie.addActionListener(this);
+		this.nouveaumessage.addActionListener(this);
+		this.envoyermessage.addActionListener(this);
 		guildcreate.addActionListener(this);
 		createguildebtn.addActionListener(this);
-		guildbtnretour.addActionListener(this);
-		guildbtnretour.setVisible(true);
+		eventsinscrirebtn.addActionListener(this);
+		eventsinscrirebtn.setVisible(true);
 
 		this.setVisible(true);
 
@@ -121,15 +131,36 @@ public class Gestion extends JFrame implements ActionListener {
 		if (source == this.guildbtncandidatures ) {
 			afficherlescandidatures();
 		}
-		if (source == this.voirguild) {
-//			System.out.println("void guild lcicked");
-//			guildpost.envoyerguildpost("balisto");
-			System.out.println(this.CurrentUser.getUsername());
+		if (source == this.guildbtncalendrier) {
+			afficherlesevenements();
 		}
-		
+		if (source == this.eventsinscrirebtn) {
+			participant.createparticipant((int) eventsinscrirebtn.getClientProperty("id"), this.CurrentUser.getId(), this.CurrentUser.getUsername(), (String) this.role.getSelectedItem());
+			afficherunevent((int) eventsinscrirebtn.getClientProperty("id"));
+		}
+		if (source==this.acceptercandidaturebtn) {
+			accepterunecandidature();
+		}
+		if (source==this.btnMessagerie) {
+			afficherlamessagerie();
+		}
+		if (source==this.nouveaumessage) {
+			afficherformulairedenouveaumessage();
+		}
+		if (source==this.envoyermessage) {
+			// envoyerlemessage
+			//cod21
+			envoyerlemessage();		
+			
+		}
 		for (int i = 0; i < allcandidaturesbtn.size(); i++) {
 			if (source == allcandidaturesbtn.get(i) ) {
-				System.out.println( allcandidaturesbtn.get(i).getClientProperty("id")+"//" );
+				afficherunecadidature(  (int) allcandidaturesbtn.get(i).getClientProperty("id") );
+			}
+		}	
+		for (int i = 0; i < alleventsbtn.size(); i++) {
+			if (source == alleventsbtn.get(i) ) {
+				afficherunevent(  (int) alleventsbtn.get(i).getClientProperty("id") );
 			}
 		}
 
@@ -137,6 +168,307 @@ public class Gestion extends JFrame implements ActionListener {
 
 	protected void mouseDblClicked(int row, int column) {
 		// TODO Auto-generated method stu
+	}
+	
+		
+		
+
+		public void afficheruneguild(int idguild) {
+
+			guild guild = new guild(idguild, true);
+			CurrentGuild.setCurrentGuild(guild);
+
+			this.getContentPane().remove(this.panel);
+			this.getContentPane().remove(this.scroller);
+
+			this.panel = new JPanel();
+			this.panel.setBounds(100, 0, 400, 500);
+			this.panel.setLayout(null);
+			this.validate();
+			this.repaint();
+
+			// Nom de la guild
+			this.guildNom = new JLabel(guild.getGuild_name());
+			this.guildNom.setBounds(20, 0, 350, 50);
+			this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
+
+			
+			// Candiatures
+			
+			// Jbuton ?
+
+			this.guildbtncandidatures.setBounds(260, 100, 140, 40);
+			this.guildbtnmembres.setBounds(260, 160, 140, 40);
+			this.guildbtncalendrier.setBounds(260, 220, 140, 40);
+			this.guildbtncandidatures.addActionListener(this);
+			this.guildbtnmembres.addActionListener(this);
+			this.guildbtncalendrier.addActionListener(this);
+			
+			// Actualitï¿½
+
+			JScrollPane scroll = addallguildpost();
+			this.panel.add(scroll);
+			this.panel.add(addenvoisguildpost());
+			this.panel.add(this.guildNom);
+			this.panel.add(this.guildbtncalendrier);
+			this.panel.add(this.guildbtnmembres);
+			this.panel.add(this.guildbtncandidatures);
+			this.panel.setBackground(Color.RED);
+
+			this.getContentPane().add(this.panel);
+			this.validate();
+			this.repaint();
+	}
+		
+	public void envoyerlemessage(){
+		int id = Utilisateur.checkifuserexist( this.name_destinataire.getText() );
+		
+		if ( id != 0 ) {
+			int id_env = this.CurrentUser.getId();
+			String name_env =this.CurrentUser.getUsername();
+			message.createmessage(id_env, name_env, id, this.name_destinataire.getText(), this.messagerie_titre.getText(), this.messagerie_message.getText());
+			afficherlamessagerie();
+		}else{
+		}
+	}
+		
+	public void afficherformulairedenouveaumessage(){
+		
+		this.getContentPane().remove(this.panel);
+		this.getContentPane().remove(this.scroller);
+		
+		this.panel = new JPanel();
+		this.panel.setBounds(0, 0, 600, 500);
+		this.panel.setLayout(null);
+		this.validate();
+		this.repaint();
+		
+		
+//		JScrollPane scroller = new JScrollPane(table);
+//		scroller.setBounds(100, 50, 400, 500);
+		
+		JLabel labeltitre = new JLabel("Titre:");
+		labeltitre.setBounds(100, 50, 90, 25);
+		messagerie_titre.setBounds(190, 50, 180, 25);
+		
+		
+		JLabel labeldestinataire = new JLabel("Destinataire:");
+		labeldestinataire.setBounds(100, 75, 90, 25);
+		name_destinataire.setBounds(190, 75, 180, 25);
+		
+		JLabel labelmessage = new JLabel("Votre message:");
+		labelmessage.setBounds(100, 100, 90, 25);
+		
+		messagerie_message.setVisible(true);
+		messagerie_message.setLineWrap(true); 
+		messagerie_message.setWrapStyleWord(true);
+		messagerie_message.setEditable(true);
+		
+		JScrollPane scroll = new JScrollPane(messagerie_message);
+		scroll.setBounds(110, 125, 350, 300);
+		scroll.setVisible(true);
+		
+		this.guildNom = new JLabel(" Nouveau message : ");
+		this.guildNom.setBounds(100, 0, 350, 50);
+		this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
+		this.envoyermessage.setBounds(360, 5, 130, 40);
+		
+		this.remove(this.panel);
+		this.panel.add(labeltitre);
+		this.panel.add(messagerie_titre);
+		this.panel.add(labeldestinataire);
+		this.panel.add(name_destinataire);
+		this.panel.add(labelmessage);
+		this.panel.add(scroll);
+		this.panel.add(this.envoyermessage);
+		this.panel.add(this.guildNom);
+		this.panel.add(labeltitre);
+		this.panel.add(labeldestinataire);
+		this.panel.add(labelmessage);
+		this.getContentPane().add(this.panel);
+		this.validate();
+		this.repaint();
+		
+	}
+	
+	public void afficherunmessage(int id){
+		
+		this.getContentPane().remove(this.panel);
+		this.getContentPane().remove(this.scroller);
+		
+		this.panel = new JPanel();
+		this.panel.setBounds(0, 0, 600, 500);
+		this.panel.setLayout(null);
+		this.validate();
+		this.repaint();
+		
+		
+//		JScrollPane scroller = new JScrollPane(table);
+//		scroller.setBounds(100, 50, 400, 500);
+		
+		message mess = message.getmessagebyid(id);
+		
+		
+		JLabel labelenvoyeur = new JLabel(mess.getName_env());
+		labelenvoyeur.setBounds(100, 50, 90, 25);
+		
+		JLabel date = new JLabel(mess.getDate()+"");
+		date.setBounds(100, 75, 90, 25);
+		
+		messagerie_message = new JTextArea(mess.getMessage());
+		messagerie_message.setVisible(true);
+		messagerie_message.setLineWrap(true); 
+		messagerie_message.setWrapStyleWord(true);
+		messagerie_message.setEditable(false);
+		
+		JScrollPane scroll = new JScrollPane(messagerie_message);
+		scroll.setBounds(110, 125, 350, 300);
+		scroll.setVisible(true);
+		
+		this.guildNom = new JLabel(mess.getTitre());
+		this.guildNom.setBounds(100, 0, 350, 50);
+		this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
+//		this.envoyermessage.setBounds(360, 5, 130, 40);
+		this.remove(this.panel);
+		this.panel.add(messagerie_titre);
+		this.panel.add(labelenvoyeur);
+		this.panel.add(name_destinataire);
+		this.panel.add(scroll);
+		this.panel.add(this.guildNom);
+		this.getContentPane().add(this.panel);
+		this.validate();
+		this.repaint();
+		
+	}
+		
+	public void afficherlamessagerie(){
+		
+
+		this.getContentPane().remove(this.panel);
+		this.getContentPane().remove(this.scroller);
+		
+		this.panel = new JPanel();
+		this.panel.setBounds(0, 0, 600, 500);
+		this.panel.setLayout(null);
+		this.validate();
+		this.repaint();
+		
+		
+		Object[] columnNames = { "Titre", "Envoyeur", "date",
+				 "id" };
+		Object[][] data = getallmessagesinaJTable();
+		JTable table = new JTable(data, columnNames);
+		
+		table.getColumnModel().getColumn(3).setMinWidth(0);
+		table.getColumnModel().getColumn(3).setMaxWidth(0);
+		table.setBounds(0, 0, 400, 500);
+
+		table.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					int ligneclicked = table.rowAtPoint(e.getPoint());
+					Object idmess= getmessageidbylineclicked(ligneclicked);
+					int id = (int) idmess;
+
+					afficherunmessage(id);
+				}
+			}
+		});
+		
+		this.table = table;
+		JScrollPane scroller = new JScrollPane(table);
+		scroller.setBounds(100, 50, 400, 500);
+		scroller.setVisible(true);
+		this.scroller = scroller;
+		
+		this.guildNom = new JLabel(" Tous vos messages : ");
+		this.guildNom.setBounds(100, 0, 350, 50);
+		this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
+//		this.guildcreate.setBounds(360, 5, 130, 40);
+		this.nouveaumessage.setBounds(360, 5, 130, 40);
+		
+		this.remove(this.panel);
+		this.panel.add(this.nouveaumessage);
+		this.panel.add(scroller);
+		this.panel.add(this.guildNom);
+		this.getContentPane().add(this.panel);
+		this.validate();
+		this.repaint();
+		
+	}
+		
+	public void accepterunecandidature(){
+		candidature cand = candidature.getcandidaturebyID((int) this.acceptercandidaturebtn.getClientProperty("id"));
+		guildmembres.createmember(CurrentGuild.getId(), cand.getUser_id(), cand.getUser_name());
+		candidature.deletcandidaturebyid((int) this.acceptercandidaturebtn.getClientProperty("id"));
+		afficherlescandidatures();
+	}
+		
+	public void afficherunevent(int id){
+		
+		planing event = planing.geteventbyid(id);
+
+		this.getContentPane().remove(this.panel);
+		this.getContentPane().remove(this.scroller);
+
+		this.panel = new JPanel();
+		this.panel.setBounds(100, 0, 400, 500);
+		this.panel.setLayout(null);
+		this.validate();
+		this.repaint();
+		
+		this.guildbtnretour.setBounds(280, 50, 100, 50);
+		
+		
+		JLabel titre = new JLabel("<html><p>"+event.getTitre()+"</p></html>");
+		titre.setBounds(20, 0, 350, 50);
+		titre.setFont(new Font("Serif", Font.PLAIN, 30));
+		
+		JTextArea description = new JTextArea(""+event.getInfos()+"");
+		description.setEditable(false);
+		description.setBounds(20, 150, 350, 200);
+		description.setLineWrap(true);
+		
+		JLabel auteur = new JLabel("<html><p>Auteur:"+event.getAuteur_name()+"</p></html>");
+		auteur.setBounds(20, 30, 350, 50);
+		
+		participant par = participant.getparticipant(id, this.CurrentUser.id);
+		
+		if (par == null) {
+			
+			JLabel rolelabel = new JLabel("Role:");
+			rolelabel.setBounds(50, 400, 100, 30);
+			
+			String[] items = {"Heal", "DPS", "Tank"};
+			role = new JComboBox(items);
+			role.setBounds(100, 400, 100, 30);
+			
+			eventsinscrirebtn.putClientProperty("id", id);
+			eventsinscrirebtn.setBounds(250, 400, 100, 30);
+			
+			this.panel.add(eventsinscrirebtn);
+			this.panel.add(role);
+			this.panel.add(rolelabel);
+			
+		}else{
+			JLabel rolelabel = new JLabel("Vous étes bien inscrit en tant que:"+par.getRole());
+			rolelabel.setBounds(50, 400, 300, 30);
+			this.panel.add(rolelabel);
+		}
+
+		
+
+		//code21
+
+		
+		this.panel.setBackground(Color.RED);
+		this.panel.add(titre);
+		this.panel.add(auteur);
+		this.panel.add(description);
+		this.panel.add(this.guildbtnretour);
+		this.getContentPane().add(this.panel);
+		this.validate();
+		this.repaint();
 	}
 	
 	public void afficherlescandidatures(){
@@ -152,9 +484,11 @@ public class Gestion extends JFrame implements ActionListener {
 		this.repaint();
 		
 
-		this.guildNom = new JLabel("Toutes les canddatures :");
+		this.guildNom = new JLabel("Toutes les candidatures :");
 		this.guildNom.setBounds(20, 0, 350, 50);
 		this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
+		
+		
 		
 		//code21
 		
@@ -171,7 +505,6 @@ public class Gestion extends JFrame implements ActionListener {
 	}
 	
 	public void envoisduformulairedeguilde(){
-	System.out.println("creation de la guild avc les info rentrés");
 	String guildname = Guildnamecreate.getText();
 	String Cogm = CoGMcreate.getText();
 	String mmo = MMOcreate.getText();
@@ -179,13 +512,10 @@ public class Gestion extends JFrame implements ActionListener {
 	
 	if ( !mmo.isEmpty() && !guildname.isEmpty() && !Cogm.isEmpty() && !serveur.isEmpty() ) {
 		if (guild.createguilde(guildname, this.CurrentUser.username, Cogm, this.CurrentUser.getId(), mmo, serveur)) {
-			System.out.println("la guild a été créer");
 			affichertoutelesguildes();
 		}else {
-			System.out.println(" impossible de créer la guild ");
 			}
 	}else {
-		System.out.println("nope");
 		JLabel label = new JLabel("<html><font color='red'>Tous les champs doivent être remplis.</font></html>");
 		label.setBounds(50, 300, 350, 50);
 		label.setVisible(true);
@@ -256,6 +586,77 @@ public class Gestion extends JFrame implements ActionListener {
 		this.validate();
 		this.repaint();
 	}
+	
+	public void afficherlesevenements(){
+		
+		this.getContentPane().remove(this.panel);
+		this.getContentPane().remove(this.scroller);
+		
+		this.panel = new JPanel();
+		this.panel.setBounds(100, 0, 400, 500);
+		this.panel.setLayout(null);
+		this.panel.setBackground(Color.white);
+		this.validate();
+		this.repaint();
+		
+		this.guildbtnretour.setBounds(280, 50, 100, 50);
+		
+		this.acceptercandidaturebtn = new JButton("Accepter");
+		this.acceptercandidaturebtn.setBounds(280, 400, 100, 50);
+		this.acceptercandidaturebtn.setVisible(true);
+		
+		JLabel entete = new JLabel("Tous les évenements:");
+		entete.setBounds(20, 0, 350, 50);
+		entete.setFont(new Font("Serif", Font.PLAIN, 30));
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(null);	
+		panel.setBounds(0, 0, 300, 300);
+		panel.setVisible(true);
+		int hauteur = 0;
+		
+		LinkedList<planing> allevents= planing.getalleventbyguildID(CurrentGuild.getId());
+
+	if (allevents != null) {
+			
+		for (int i = 0; i < allevents.size(); i++) {
+
+        	if(allevents.get(i).getAuteur_name() != null){
+        		
+        		JLabel Auteur = new JLabel(""+allevents.get(i).getAuteur_name());
+        		Auteur.setBounds( 10, hauteur, 130, 30);
+        		panel.add( Auteur );
+        		
+        		JLabel titre = new JLabel(""+allevents.get(i).getTitre());
+        		titre.setBounds( 10, hauteur+10, 120, 30);
+        		panel.add(titre);
+        		
+        		JButton afficher = new JButton("Afficher");
+        		afficher.setBounds( 200, hauteur, 120, 30);
+        		afficher.putClientProperty("id", Integer.valueOf(allevents.get(i).getId()));
+        		afficher.addActionListener(this);
+        		
+        		alleventsbtn.add(afficher);
+        		
+        		panel.add(afficher);
+
+        		hauteur += 70;
+        	}
+        }
+	}
+        panel.setPreferredSize(new Dimension(50, hauteur+50));
+		JScrollPane scroll = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scroll.setVisible(true);
+		scroll.setBounds(20, 100, 350, 350);
+		this.panel.add(entete);
+		this.panel.add(this.guildbtnretour);
+		this.panel.add(scroll);
+		
+		this.getContentPane().add(this.panel);
+		this.validate();
+		this.repaint();
+
+	}
 
 	public void affichertouslesmembresdelaguilde(){
 
@@ -308,7 +709,6 @@ public class Gestion extends JFrame implements ActionListener {
 }
 	
 	public void envoyerunguildpost(){
-	System.out.println("message en cour d'envoi magle");
 	String message = this.messagefieldguildpost.getText();
 	this.messagefieldguildpost.setText("");
 	guildpost.envoyerguildpost(this.CurrentUser, message);
@@ -330,7 +730,7 @@ public class Gestion extends JFrame implements ActionListener {
 	Object[] columnNames = { "Guild", "GuildMaster", "MMO Principale",
 			"Server", "id" };
 	Object[][] data = getallguildinaJTable();
-	JTable table = new JTable(data, columnNames);
+	table = new JTable(data, columnNames);
 	
 	table.getColumnModel().getColumn(4).setMinWidth(0);
 	table.getColumnModel().getColumn(4).setMaxWidth(0);
@@ -347,7 +747,6 @@ public class Gestion extends JFrame implements ActionListener {
 		}
 	});
 	
-	this.table = table;
 	JScrollPane scroller = new JScrollPane(table);
 	scroller.setBounds(100, 50, 400, 500);
 	scroller.setVisible(true);
@@ -371,21 +770,19 @@ public class Gestion extends JFrame implements ActionListener {
 	
 	public Object[][] getallmembresguildinaJTable() {
 		LinkedList<guildmembres> allmembres = guildmembres.getallguildmembresbyguildid(CurrentGuild.getId());
-		System.out.println(CurrentGuild.getId()+"//");
 		Object[][] data = new Object[allmembres.size()][5];
 		for (int i = 0; i < allmembres.size(); i++) {
 			data[i][0] = allmembres.get(i).username;
-			System.out.println(allmembres.get(i).username+"/*");
 			data[i][1] = allmembres.get(i).userid; 
 			data[i][2] = allmembres.get(i).Guildid; 
 		}
 		return data;
 	}
 
-	public void afficheruneguild(int idguild) {
+	public void afficherunecadidature(int idcanddature) {
 
-		guild guild = new guild(idguild, true);
-		CurrentGuild.setCurrentGuild(guild);
+		candidature cand = new candidature();
+		cand= cand.getcandidaturebyID(idcanddature);
 
 		this.getContentPane().remove(this.panel);
 		this.getContentPane().remove(this.scroller);
@@ -395,35 +792,38 @@ public class Gestion extends JFrame implements ActionListener {
 		this.panel.setLayout(null);
 		this.validate();
 		this.repaint();
-
-		// Nom de la guild
-		this.guildNom = new JLabel(guild.getGuild_name());
-		this.guildNom.setBounds(20, 0, 350, 50);
-		this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
-
 		
-		// Candiatures
+		this.guildbtnretour.setBounds(280, 50, 100, 50);
 		
-		// Jbuton ?
-
-		this.guildbtncandidatures.setBounds(260, 100, 140, 40);
-		this.guildbtnmembres.setBounds(260, 160, 140, 40);
-		this.guildbtncalendrier.setBounds(260, 220, 140, 40);
-		this.guildbtncandidatures.addActionListener(this);
-		this.guildbtnmembres.addActionListener(this);
-		this.guildbtncalendrier.addActionListener(this);
+		this.acceptercandidaturebtn = new JButton("Accepter");
+		this.acceptercandidaturebtn.addActionListener(this);
+		this.acceptercandidaturebtn.putClientProperty("id", cand.getId());
+		this.acceptercandidaturebtn.setBounds(280, 400, 100, 50);
+		this.acceptercandidaturebtn.setVisible(true);
 		
-		// Actualitï¿½
-
-		JScrollPane scroll = addallguildpost();
-		this.panel.add(scroll);
-		this.panel.add(addenvoisguildpost());
-		this.panel.add(this.guildNom);
-		this.panel.add(this.guildbtncalendrier);
-		this.panel.add(this.guildbtnmembres);
-		this.panel.add(this.guildbtncandidatures);
+		JLabel titre = new JLabel("<html><p>"+cand.getMessage_titre()+"</p></html>");
+		titre.setBounds(20, 0, 350, 50);
+		titre.setFont(new Font("Serif", Font.PLAIN, 30));
+		
+		this.candidaturemessage = new JTextArea(cand.getMessage());
+		this.candidaturemessage.setBounds(20, 110, 320, 250);
+		this.candidaturemessage.setVisible(true);
+		this.candidaturemessage.setEditable(false);
+		this.candidaturemessage.setLineWrap(true); 
+		this.candidaturemessage.setWrapStyleWord(true); 
+	
+		
+		
+		//code21
+		
+		
+		
+		
 		this.panel.setBackground(Color.RED);
-
+		this.panel.add(this.acceptercandidaturebtn);
+		this.panel.add(this.guildbtnretour);
+		this.panel.add(titre);
+		this.panel.add(this.candidaturemessage);
 		this.getContentPane().add(this.panel);
 		this.validate();
 		this.repaint();
@@ -462,11 +862,11 @@ public class Gestion extends JFrame implements ActionListener {
 		int hauteur = 0;
         for (int i = allposts.size()-1; i > 0; i--) {
         	if(allposts.get(i).getUserName() != null){
-        		JLabel Auteur = new JLabel("//"+allposts.get(i).getUserName());
+        		JLabel Auteur = new JLabel(""+allposts.get(i).getUserName());
         		Auteur.setBounds( 10, hauteur, 190, 50);
         		panel.add( Auteur );
         		
-        		JLabel Message = new JLabel("//"+allposts.get(i).getMessage());
+        		JLabel Message = new JLabel(""+allposts.get(i).getMessage());
         		Message.setBounds( 10, hauteur+10, 190, 50);
         		panel.add(Message);  
         		
@@ -479,7 +879,6 @@ public class Gestion extends JFrame implements ActionListener {
 		scroll.setBounds(20, 200, 220, 250);
 		return scroll;
 	}
-	
 	
 	public JScrollPane addallcandidatures(){
 		JPanel panel = new JPanel();
@@ -496,7 +895,7 @@ public class Gestion extends JFrame implements ActionListener {
 		for (int i = 0; i < allcandidatures.size(); i++) {
         	if(allcandidatures.get(i).getUser_name() != null){
         		
-        		JLabel Auteur = new JLabel("//"+allcandidatures.get(i).getUser_name());
+        		JLabel Auteur = new JLabel(""+allcandidatures.get(i).getUser_name());
         		Auteur.setBounds( 10, hauteur, 190, 50);
         		panel.add( Auteur );
         		
@@ -504,14 +903,13 @@ public class Gestion extends JFrame implements ActionListener {
         		Message.setBounds( 10, hauteur+10, 190, 150);
         		panel.add(Message);  
         		
-        		JButton accepter = new JButton("Accepter");
-        		accepter.setBounds( 200, hauteur+20, 120, 30);
-        		accepter.putClientProperty("id", Integer.valueOf(allcandidatures.get(i).getId()));
-        		accepter.addActionListener(this);
-        		allcandidaturesbtn.add(accepter);
+        		JButton afficher = new JButton("Afficher");
+        		afficher.setBounds( 200, hauteur+20, 120, 30);
+        		afficher.putClientProperty("id", Integer.valueOf(allcandidatures.get(i).getId()));
+        		afficher.addActionListener(this);
+        		allcandidaturesbtn.add(afficher);
         		
-//        		System.out.println(accepter.getClientProperty("id"));
-        		panel.add(accepter);
+        		panel.add(afficher);
 
         		hauteur += 50;
         	}
@@ -523,9 +921,13 @@ public class Gestion extends JFrame implements ActionListener {
 		return scroll;
 	}
 	
-	
 	public Object getguildidbylineclicked(int ligneclicked) {
 		Object id = this.table.getValueAt(ligneclicked, 4);
+		return id;
+	}
+	
+	public Object getmessageidbylineclicked(int ligneclicked){
+		Object id = this.table.getValueAt(ligneclicked, 3);
 		return id;
 	}
 
@@ -542,26 +944,17 @@ public class Gestion extends JFrame implements ActionListener {
 		}
 		return data;
 	}
+	public Object[][] getallmessagesinaJTable() {
+		LinkedList<message> allmessages = message.getallmessageforuser(this.CurrentUser.getId());
+		Object[][] data = new Object[allmessages.size()][5];
+
+		for (int i = 0; i < allmessages.size(); i++) {
+			data[i][0] = allmessages.get(i).getTitre();
+			data[i][1] = allmessages.get(i).getName_env();
+			data[i][2] = allmessages.get(i).getDate();
+			data[i][3] = allmessages.get(i).getId();
+		}
+		return data;
+	}
 	
 }
-
-//class ButtonRenderer extends JButton implements TableCellRenderer {
-//
-//	public ButtonRenderer() {
-//		setOpaque(true);
-//	}
-//
-//	@Override
-//	public Component getTableCellRendererComponent(JTable table, Object value,
-//			boolean isSelected, boolean hasFocus, int row, int column) {
-//		if (isSelected) {
-//			setForeground(table.getSelectionForeground());
-//			setBackground(table.getSelectionBackground());
-//		} else {
-//			setForeground(table.getForeground());
-//			setBackground(UIManager.getColor("Button.background"));
-//		}
-//		setText((value == null) ? "" : value.toString());
-//		return this;
-//	}
-//}

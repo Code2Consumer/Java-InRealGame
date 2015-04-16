@@ -70,14 +70,11 @@ public class Visuel extends JFrame implements ActionListener{
         }
         
         if  (source==inscription){
-            System.out.println("inscription pressed");
             setpanelinscription();
 
             }
         if  (source==sinscrire){
         	
-            System.out.println("sinscrire pressed");
-            
             String username = connectionlogin.getText();
             String password = connectionmdp.getText();
             String email = connectionemail.getText();
@@ -108,7 +105,6 @@ public class Visuel extends JFrame implements ActionListener{
         this.LabelMessage.setBounds(110, 60, 200, 40);
         this.sinscrire.setBounds(40, 220, 200, 40);
         sinscrire.setVisible(true);
-        
         
     	
         PanelContentt.add(this.connectionlogin);

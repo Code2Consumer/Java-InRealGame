@@ -36,29 +36,24 @@ public class guildmembres {
 		this.username = username;
 	}
 	
-	public void createmember(){
-//		
-//		BDD unebdd = new BDD();
-//		unebdd.chargerPilote();
-//		unebdd.seConnecter();
-//		Connection con = unebdd.getMaConnection();
-//		
-//        String sql =  " INSERT INTO `guildmembres`(`id`, `username`, `username_canonical`, `email`, `email_canonical`, `password`) VALUES (NULL, '"+username+"','"+username+"', '"+email+"', '"+email+"', '"+password+"')  " ;
-//        
-//        try {
-//	        Statement smt = con.createStatement() ;
-//	        ResultSet rs = smt.executeQuery(sql) ;
-//	          while (rs.next()) {
-//	        	  this.setId(Integer.parseInt(rs.getString("id")));
-//	        	  this.setUserid((Integer.parseInt(rs.getString("userid"))));
-//	        	  this.setGuildid(Integer.parseInt(rs.getString("Guildid")));
-//	        	  this.setUsername( rs.getString("username"));
-//	           }
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println(" Impossible de recuperer ce membre. ");
-//		}
-//        		
+	public static void createmember(int Guild_id, int user_id, String username){
+		
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+		
+        String sql =  "INSERT INTO `symfony`.`guildmembres` (`id`, `Guildid`, `userid`, `username`) VALUES (NULL, '"+Guild_id+"', '"+user_id+"', '"+username+"'); " ;
+        
+        try {
+	        Statement smt = con.createStatement() ;
+	        smt.executeUpdate(sql) ;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" Impossible de recuperer ce membre. ");
+		}
+        		
 	}
 
 	

@@ -24,6 +24,31 @@ public class BDD
 		this.unUser = "root";
 		this.unMdp = "";
 		this.uneConnexion = null;
+		
+//		this.unServeur = "192.168.56.1";
+//		this.uneBDD = "symfony";
+//		this.unUser = "root";
+//		this.unMdp = "";
+//		this.uneConnexion = null;
+		
+//		this.unServeur = "db572590630.db.1and1.com";
+//		this.uneBDD = "db572590630";
+//		this.unUser = "dbo572590630";
+//		this.unMdp = "mysqlmdp";
+//		this.uneConnexion = null;
+		
+//		this.unServeur = "sql2.olympe.in";
+//		this.uneBDD = "r6k35uom";
+//		this.unUser = "r6k35uom";
+//		this.unMdp = "letmein";
+//		this.uneConnexion = null;
+		
+//		this.unServeur = "mysql1.hostinger.fr";
+//		this.uneBDD = "u826733868_data";
+//		this.unUser = "u826733868_user";
+//		this.unMdp = "ymf0N5OHnz";
+//		this.uneConnexion = null;
+
 	}
 	
 	public void chargerPilote () 
@@ -43,6 +68,7 @@ public class BDD
 	{
 		String url = "jdbc:mysql://"+this.unServeur+"/"+this.uneBDD;
 		try{
+			
 			// connexion au serveur et à la bdd 
 			this.uneConnexion = DriverManager.getConnection(url,this.unUser, this.unMdp); 
 		}	

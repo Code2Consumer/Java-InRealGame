@@ -6,8 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Utilisateur {
-	public int id=0;
-	public String username, email, password;
+	public int id=1;
+	public String email, password;
+	public String username="Teros";
 
 	
 	public Utilisateur(int id, String username, String email, String password) {
@@ -77,7 +78,30 @@ public class Utilisateur {
 		}
 	
 	}
-
+	
+	public static int checkifuserexist(String login){
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+		
+        String sql =  "select * from utilisateur where username='"+login+"';" ;
+        
+        try {
+	        Statement smt = con.createStatement() ;
+	        ResultSet rs = smt.executeQuery(sql) ;
+	          while (rs.next()) {
+	        	  if ( rs.getString("id") != null ) {
+	        		  return Integer.parseInt(rs.getString("id"));
+	              }
+	          }    
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" Impossible de verifier si l'utilisateur existe ");
+			System.out.println(""+e);
+		}		
+		return 0;
+	}
 	
 	public void getallusers(){
 		
@@ -91,14 +115,11 @@ public class Utilisateur {
 	        Statement smt = con.createStatement() ;
 	        ResultSet rs = smt.executeQuery(sql) ;
 	          while (rs.next()) {
-	              System.out.println(rs.getString("username")) ;
 	           }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("un truk a pas marcher ");
 		}
-        
-	
 	}
 
 	public int getId() {

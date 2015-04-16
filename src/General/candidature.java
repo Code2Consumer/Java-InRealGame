@@ -107,6 +107,60 @@ public class candidature {
         return null;
 	}
 	
+
+	public static candidature getcandidaturebyID(int id){
+	BDD unebdd = new BDD();
+	unebdd.chargerPilote();
+	unebdd.seConnecter();
+	Connection con = unebdd.getMaConnection();
+    String sql =  " select * from candidature where id = '"+id+"' ";
+    
+    try {
+        Statement smt = con.createStatement() ;
+        ResultSet rs = smt.executeQuery(sql) ;
+
+        candidature cand = new candidature();
+        
+          while (rs.next()) {
+        	  if ( rs.getString("id") != null ) {
+        		  cand.id = Integer.parseInt(rs.getString("id") );
+        		  cand.Guild_Id = Integer.parseInt(rs.getString("Guild_id") );
+        		  cand.user_id = Integer.parseInt(rs.getString("user_id") );
+        		  cand.guild_name = rs.getString("guild_name") ;
+        		  cand.user_name =rs.getString("user_name") ;
+        		  cand.message =rs.getString("message") ;
+        		  cand.message_titre =rs.getString("message_titre");
+        		  cand.situation =rs.getString("situation") ;
+              }
+          }    
+          
+          return cand;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		System.out.println("un truk a pas marcher ");
+	}	
+    
+    return null;
+    
+}
+	public static void deletcandidaturebyid(int id){
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+	    String sql =  "DELETE FROM `symfony`.`candidature` WHERE `candidature`.`id` = "+id+"";
+	    
+	    try {
+	        Statement smt = con.createStatement() ;
+	        smt.executeUpdate(sql) ;
+	         
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("un truk a pas marcher ");
+		}	
+	    		
+	}
+	
 	
 	public void createCandidature(){
 		BDD unebdd = new BDD();
