@@ -79,8 +79,7 @@ public class planing {
 	        		  event.auteur_name = rs.getString("auteur_name") ;
 	        		  event.titre =rs.getString("titre") ;
 	        		  event.infos =rs.getString("infos") ;
-//	        		  event.date =rs.getString("message_titre");
-	        		  
+	        		  event.date =rs.getDate("date");
 	        		  allevents.push(event);
 	              }
 	          }    
@@ -121,8 +120,7 @@ public class planing {
 	        		  event.auteur_name = rs.getString("auteur_name") ;
 	        		  event.titre =rs.getString("titre") ;
 	        		  event.infos =rs.getString("infos") ;
-//	        		  event.date =rs.getString("message_titre");
-
+	        		  event.date =rs.getDate("date");
 	              }
 	          }    
 	          

@@ -89,6 +89,8 @@ public class Gestion extends JFrame implements ActionListener {
 		this.add(this.btnMessagerie);
 		this.add(this.btnGuild);
 		this.add(this.panel);
+		this.guildbtnretour.addActionListener(this);
+		this.guildbtnretour.setVisible(true);
 		btnGuild.addActionListener(this);
 		this.btnMessagerie.addActionListener(this);
 		this.nouveaumessage.addActionListener(this);
@@ -97,8 +99,11 @@ public class Gestion extends JFrame implements ActionListener {
 		createguildebtn.addActionListener(this);
 		eventsinscrirebtn.addActionListener(this);
 		eventsinscrirebtn.setVisible(true);
+		
+		afficherhome();
 
 		this.setVisible(true);
+		
 
 	}
 
@@ -213,7 +218,6 @@ public class Gestion extends JFrame implements ActionListener {
 			this.panel.add(this.guildbtncalendrier);
 			this.panel.add(this.guildbtnmembres);
 			this.panel.add(this.guildbtncandidatures);
-			this.panel.setBackground(Color.RED);
 
 			this.getContentPane().add(this.panel);
 			this.validate();
@@ -226,6 +230,7 @@ public class Gestion extends JFrame implements ActionListener {
 		if ( id != 0 ) {
 			int id_env = this.CurrentUser.getId();
 			String name_env =this.CurrentUser.getUsername();
+			System.out.println(this.name_destinataire.getText());
 			message.createmessage(id_env, name_env, id, this.name_destinataire.getText(), this.messagerie_titre.getText(), this.messagerie_message.getText());
 			afficherlamessagerie();
 		}else{
@@ -456,12 +461,6 @@ public class Gestion extends JFrame implements ActionListener {
 			this.panel.add(rolelabel);
 		}
 
-		
-
-		//code21
-
-		
-		this.panel.setBackground(Color.RED);
 		this.panel.add(titre);
 		this.panel.add(auteur);
 		this.panel.add(description);
@@ -479,7 +478,6 @@ public class Gestion extends JFrame implements ActionListener {
 		this.panel = new JPanel();
 		this.panel.setBounds(100, 0, 400, 500);
 		this.panel.setLayout(null);
-		this.panel.setBackground(Color.white);
 		this.validate();
 		this.repaint();
 		
@@ -580,7 +578,6 @@ public class Gestion extends JFrame implements ActionListener {
 		this.panel.add(Serveurlabel);
 		this.panel.add(Serveurcreate);
 		this.panel.add(createguildebtn);
-		this.panel.setBackground(Color.green);
 
 		this.getContentPane().add(this.panel);
 		this.validate();
@@ -595,7 +592,6 @@ public class Gestion extends JFrame implements ActionListener {
 		this.panel = new JPanel();
 		this.panel.setBounds(100, 0, 400, 500);
 		this.panel.setLayout(null);
-		this.panel.setBackground(Color.white);
 		this.validate();
 		this.repaint();
 		
@@ -630,6 +626,10 @@ public class Gestion extends JFrame implements ActionListener {
         		JLabel titre = new JLabel(""+allevents.get(i).getTitre());
         		titre.setBounds( 10, hauteur+10, 120, 30);
         		panel.add(titre);
+        		
+        		JLabel date = new JLabel(allevents.get(i).getDate()+"");
+        		date.setBounds(10, hauteur+20, 120, 30);
+        		
         		
         		JButton afficher = new JButton("Afficher");
         		afficher.setBounds( 200, hauteur, 120, 30);
@@ -811,15 +811,8 @@ public class Gestion extends JFrame implements ActionListener {
 		this.candidaturemessage.setEditable(false);
 		this.candidaturemessage.setLineWrap(true); 
 		this.candidaturemessage.setWrapStyleWord(true); 
-	
+
 		
-		
-		//code21
-		
-		
-		
-		
-		this.panel.setBackground(Color.RED);
 		this.panel.add(this.acceptercandidaturebtn);
 		this.panel.add(this.guildbtnretour);
 		this.panel.add(titre);
@@ -845,7 +838,6 @@ public class Gestion extends JFrame implements ActionListener {
 	    this.envoyerguildpostbtn.addActionListener(this);
 	    this.envoyerguildpostbtn.setBounds(140, 100, 80, 40);
 	    
-	    panel.setBackground(Color.YELLOW);
 	    panel.add(mess);		
 	    panel.add(this.messagefieldguildpost);	
 	    panel.add(this.envoyerguildpostbtn);
@@ -955,6 +947,38 @@ public class Gestion extends JFrame implements ActionListener {
 			data[i][3] = allmessages.get(i).getId();
 		}
 		return data;
+	}
+	
+	public void afficherhome(){
+		this.getContentPane().remove(this.panel);
+		this.getContentPane().remove(this.scroller);
+
+		this.panel = new JPanel();
+		this.panel.setBounds(100, 0, 400, 500);
+		this.panel.setLayout(null);
+		this.validate();
+		this.repaint();
+		
+
+		JLabel titre = new JLabel("In");
+		titre.setBounds(20, 0, 350, 100);
+		titre.setFont(new Font("Serif", Font.PLAIN, 80));
+		this.panel.add(titre);
+
+		titre = new JLabel("Real");
+		titre.setBounds(90, 90, 350, 100);
+		titre.setFont(new Font("Serif", Font.PLAIN, 80));
+		this.panel.add(titre);
+		
+		titre = new JLabel("Game");
+		titre.setBounds(160, 180, 350, 100);
+		titre.setFont(new Font("Serif", Font.PLAIN, 80));
+		this.panel.add(titre);
+		
+		
+		this.getContentPane().add(this.panel);
+		this.validate();
+		this.repaint();
 	}
 	
 }
