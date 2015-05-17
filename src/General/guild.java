@@ -106,7 +106,7 @@ public class guild {
 	
 	}
 
-	
+
 	static public LinkedList<guild> getallguilds(){
 		
 		BDD unebdd = new BDD();
@@ -145,6 +145,75 @@ new guild(
 		}
 		return null; 
 	}
+	
+	static public boolean checkifuserismembre(int guildid, int userid){
+		
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+		
+        String sql =  "select * from guildmembre where userid="+userid+" and Guildid = '"+ guildid + "';" ;
+        
+        try {
+	        Statement smt = con.createStatement() ;
+	        ResultSet rs = smt.executeQuery(sql) ;
+	          while (rs.next()) {
+	        	  if ( rs.getString("id") != null ) {
+	        		  return true;
+	              }
+	          }    
+	          
+//	          CurrentUser.loadcurrentuser(this);
+	          
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" connection impossible:"+e);
+		}
+        
+		return false;
+	}
+
+	static public LinkedList<guild> getallmyguilds(){
+		
+		BDD unebdd = new BDD();
+		unebdd.chargerPilote();
+		unebdd.seConnecter();
+		Connection con = unebdd.getMaConnection();
+		int userid = Gestion.CurrentUser.id;
+				
+        String sql="SELECT * FROM guild G, guildmembres M WHERE G.id=M.Guildid AND M.userid = "+userid+" ; ";
+
+        try {
+	        Statement smt = con.createStatement() ;
+	        ResultSet rs = smt.executeQuery(sql) ;
+	        
+	        LinkedList<guild> allguilds = new LinkedList<guild>();
+	        
+	          while (rs.next()) {
+	              System.out.println("11");
+guild uneguild = 
+new guild(
+		Integer.parseInt( rs.getString("id") ), 
+		Integer.parseInt( rs.getString("gM_id") ), 
+		rs.getString("guild_name"), 
+		rs.getString("gM"), 
+		rs.getString("coGM"), 
+		rs.getString("mMO_Principale"), 
+		rs.getString("serveur")
+		);
+	       
+	        	  allguilds.push(uneguild);
+	           }
+	          
+	          return allguilds;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" Impossible de recuperer toute les guilods. ");
+		}
+		return null; 
+	}
+	
 	
 	public static boolean createguilde(String GuildName, String GMname, String CoGm, int GM_id, String MMO_p, String serveur){
 		

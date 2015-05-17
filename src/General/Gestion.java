@@ -45,7 +45,12 @@ public class Gestion extends JFrame implements ActionListener {
 	
 	public LinkedList<JButton> allcandidaturesbtn = new LinkedList<JButton>();
 	public JButton acceptercandidaturebtn = new JButton("Accepter la candidature");
-	public JTextArea candidaturemessage=new JTextArea();
+	public JTextArea candidaturemessage = new JTextArea();
+
+	public JTextField candidaturetitre = new JTextField();
+	public JTextField candidaturetext = new JTextField();
+	public JButton envoyercandidaturebtn = new JButton();
+	
 	
 	// Guild creation :
 	public JTextField Guildnamecreate = new JTextField();
@@ -178,8 +183,9 @@ public class Gestion extends JFrame implements ActionListener {
 		
 		
 
-		public void afficheruneguild(int idguild) {
+	public void afficheruneguild(int idguild) {
 
+		if(guild.checkifuserismembre(idguild, this.CurrentUser.id) ) {
 			guild guild = new guild(idguild, true);
 			CurrentGuild.setCurrentGuild(guild);
 
@@ -222,6 +228,68 @@ public class Gestion extends JFrame implements ActionListener {
 			this.getContentPane().add(this.panel);
 			this.validate();
 			this.repaint();
+		}else{
+
+//cod13
+			
+			this.getContentPane().remove(this.panel);
+			this.getContentPane().remove(this.scroller);
+
+			this.panel = new JPanel();
+			this.panel.setBounds(100, 0, 400, 500);
+			this.panel.setLayout(null);
+			this.validate();
+			this.repaint();
+			
+			// label 
+			JLabel label = new JLabel("Créez votre guilde :");
+			label.setBounds(50, 20, 350, 50);
+			label.setFont(new Font("Serif", Font.PLAIN, 30));
+
+			// Guild_name
+			JLabel Guildnamelabel = new JLabel("Nom de la guilde :");
+			Guildnamelabel.setBounds(50, 100, 130, 20);
+			Guildnamecreate = new JTextField();
+			Guildnamecreate.setBounds(180, 100, 130, 20);
+
+			// CoGM
+			JLabel CoGMlabel = new JLabel("Co GM :");
+			CoGMlabel.setBounds(50, 140, 130, 20);
+			CoGMcreate = new JTextField();
+			CoGMcreate.setBounds(180, 140, 130, 20);
+			
+			// MMO_Principale
+			JLabel MMOlabel = new JLabel("MMORPG Principale :");
+			MMOlabel.setBounds(50, 180, 130, 20);
+			MMOcreate = new JTextField();
+			MMOcreate.setBounds(180, 180, 130, 20);
+			
+			// Serveur 
+			JLabel Serveurlabel = new JLabel("Serveur de la guilde :");
+			Serveurlabel.setBounds(50, 220, 130, 20);
+			Serveurcreate = new JTextField();
+			Serveurcreate.setBounds(180, 220, 130, 20);
+			
+			createguildebtn.setBounds(50, 270, 260, 40);
+			
+			this.panel.add(label);
+			this.panel.add(Guildnamelabel);
+			this.panel.add(Guildnamecreate);
+			this.panel.add(CoGMlabel);
+			this.panel.add(CoGMcreate);
+			this.panel.add(MMOlabel);
+			this.panel.add(MMOcreate);		
+			this.panel.add(Serveurlabel);
+			this.panel.add(Serveurcreate);
+			this.panel.add(createguildebtn);
+
+			this.getContentPane().add(this.panel);
+			this.validate();
+			this.repaint();
+			
+			
+			
+		}
 	}
 		
 	public void envoyerlemessage(){
@@ -705,8 +773,7 @@ public class Gestion extends JFrame implements ActionListener {
 	this.getContentPane().add(this.panel);
 	this.validate();
 	this.repaint();
-	
-}
+	}
 	
 	public void envoyerunguildpost(){
 	String message = this.messagefieldguildpost.getText();
@@ -767,6 +834,59 @@ public class Gestion extends JFrame implements ActionListener {
 	this.repaint();
 	
 }
+	public void affichertoutemesguildes(){
+
+	this.getContentPane().remove(this.panel);
+	this.getContentPane().remove(this.scroller);
+	
+	this.panel = new JPanel();
+	this.panel.setBounds(0, 0, 600, 500);
+	this.panel.setLayout(null);
+	this.validate();
+	this.repaint();
+	
+	
+	Object[] columnNames = { "Guild", "GuildMaster", "MMO Principale",
+			"Server", "id" };
+	Object[][] data = getallmesguildinaJTable();
+	table = new JTable(data, columnNames);
+	
+	table.getColumnModel().getColumn(4).setMinWidth(0);
+	table.getColumnModel().getColumn(4).setMaxWidth(0);
+	table.setBounds(0, 0, 400, 500);
+
+	table.addMouseListener(new MouseAdapter() {
+		public void mousePressed(MouseEvent e) {
+			if (e.getClickCount() == 2) {
+				int ligneclicked = table.rowAtPoint(e.getPoint());
+				Object idguild = getguildidbylineclicked(ligneclicked);
+				int id = Integer.valueOf((String) idguild);
+				afficheruneguild(id);
+			}
+		}
+	});
+	
+	JScrollPane scroller = new JScrollPane(table);
+	scroller.setBounds(100, 50, 400, 500);
+	scroller.setVisible(true);
+	this.scroller = scroller;
+	
+	this.guildNom = new JLabel(" Toute mes guildes : ");
+	this.guildNom.setBounds(100, 0, 350, 50);
+	this.guildNom.setFont(new Font("Serif", Font.PLAIN, 30));
+	this.guildcreate.setBounds(360, 5, 130, 40);
+	
+	this.remove(this.panel);
+
+	this.panel.add(scroller);
+	this.panel.add(this.guildNom);
+	this.panel.add(guildcreate);
+	this.getContentPane().add(this.panel);
+	this.validate();
+	this.repaint();
+	
+}
+	
 	
 	public Object[][] getallmembresguildinaJTable() {
 		LinkedList<guildmembres> allmembres = guildmembres.getallguildmembresbyguildid(CurrentGuild.getId());
@@ -925,6 +1045,19 @@ public class Gestion extends JFrame implements ActionListener {
 
 	public Object[][] getallguildinaJTable() {
 		LinkedList<guild> allguilds = guild.getallguilds();
+		Object[][] data = new Object[allguilds.size()][5];
+
+		for (int i = 0; i < allguilds.size(); i++) {
+			data[i][0] = allguilds.get(i).getGuild_name();
+			data[i][1] = allguilds.get(i).getGM();
+			data[i][2] = allguilds.get(i).getMMO_Principale();
+			data[i][3] = allguilds.get(i).getServeur();
+			data[i][4] = "" + allguilds.get(i).getId();
+		}
+		return data;
+	}
+	public Object[][] getallmesguildinaJTable() {
+		LinkedList<guild> allguilds = guild.getallmyguilds();
 		Object[][] data = new Object[allguilds.size()][5];
 
 		for (int i = 0; i < allguilds.size(); i++) {
